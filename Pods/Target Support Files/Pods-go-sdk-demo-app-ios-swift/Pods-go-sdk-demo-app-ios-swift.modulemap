@@ -1,0 +1,6 @@
+framework module Pods_go_sdk_demo_app_ios_swift {
+  umbrella header "Pods-go-sdk-demo-app-ios-swift-umbrella.h"
+
+  export *
+  module * { export * }
+}

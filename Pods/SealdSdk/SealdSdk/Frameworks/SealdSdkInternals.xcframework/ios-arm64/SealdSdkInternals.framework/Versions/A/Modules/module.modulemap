@@ -1,0 +1,8 @@
+framework module "SealdSdkInternals" {
+	header "ref.h"
+    header "SealdSdkInternalsMobile_sdk.objc.h"
+    header "Universe.objc.h"
+    header "SealdSdkInternals.h"
+
+    export *
+}

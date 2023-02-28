@@ -1,0 +1,1595 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		01108C2D345FE2CA9A98ADF30CC20C15 /* JWTAlgorithmFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 905D0C16831DD034BE25DFFCB7944B5F /* JWTAlgorithmFactory.m */; };
+		06887A43F00D5E78B6EDBAF1A8863D90 /* JWTClaim.h in Headers */ = {isa = PBXBuildFile; fileRef = CECF8EA1678604C161B45F4BC952929B /* JWTClaim.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0AE52C38490CCD3163BC96A291B190E8 /* JWTAlgorithmNone.m in Sources */ = {isa = PBXBuildFile; fileRef = 128F649E2D57109804BE1BEE3679D3F9 /* JWTAlgorithmNone.m */; };
+		0EB3444F7483CBA40A5363AA852E53E7 /* JWTCryptoSecurity.h in Headers */ = {isa = PBXBuildFile; fileRef = 52934ABB62C2D64344EDABA204D66B48 /* JWTCryptoSecurity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FE303655868C13CA6646E55042F70F0 /* JWTCryptoKeyExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = D7B2DD3EBC0BB89093A9E0610D03D2B4 /* JWTCryptoKeyExtractor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		14B06F8993B83AB75CAC815CEBE28BD9 /* JWTCryptoKeyExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = A7C84C55821E39D006388F396C496022 /* JWTCryptoKeyExtractor.m */; };
+		16FBC4E3BA2E075A03F930CE6944154C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		170B2D33D4FD0F5FDA077C0D62927D76 /* JWTCoding+VersionThree.h in Headers */ = {isa = PBXBuildFile; fileRef = 8ED79232977E2DA28AF63D6E8DACD1F4 /* JWTCoding+VersionThree.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		185B03A9A187493F9F884495EBF34B4A /* JWT-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B17B0EC23C6B673F75FDE28AD0D1CD45 /* JWT-dummy.m */; };
+		1A8A162F75DDD244D702C8398D8C5516 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		1FF4B70B2D872943204DAD77864DDF44 /* SealdSdk-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA0EA859F245BF4EEF2E6C31CC4CD0 /* SealdSdk-dummy.m */; };
+		20A42A1FE27F88051DC0D220CC729548 /* JWTClaimsSetSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = B1BEC041CF9720C150494CAC2C3FC470 /* JWTClaimsSetSerializer.m */; };
+		25FC2594FF45378FA8CE6CA249D4552A /* JWTAlgorithmNone.h in Headers */ = {isa = PBXBuildFile; fileRef = 5726E01E7580E7A7B99BCFE2510DC400 /* JWTAlgorithmNone.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2602719BA624D2931267EF1CCE7D6EF1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D1813D1C6EB3921E8A2A8A911CC2731 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		276497F5208C96BCBBB9FED72F68CF87 /* JWTAlgorithmHSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC8803E103D95AE1616E969498F9C17 /* JWTAlgorithmHSBase.m */; };
+		2956FC0641B83016AF38BE7DD5DA217C /* JWTCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D6A2844473676E7029F974E36934F3 /* JWTCoding.m */; };
+		2974B9BE89470BDC3568DA9C4FECD06A /* JWTCoding+VersionOne.m in Sources */ = {isa = PBXBuildFile; fileRef = 5156FD425EE64308EF001EF128C52014 /* JWTCoding+VersionOne.m */; };
+		2C9D84FB3852831A644B4D277143F451 /* JWTBase64Coder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6643310012BFB0FCF3D42264383E37AE /* JWTBase64Coder.m */; };
+		2FC6F4B202D4B94F0F938152AC027961 /* JWTAlgorithmDataHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = A706A9994B6971C5A71DD2C35D6214CD /* JWTAlgorithmDataHolder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		31EBDD00FC2808A5F6F514710A1C4003 /* JWTBase64Coder.h in Headers */ = {isa = PBXBuildFile; fileRef = DDA9AF6F28381C2AFBA12304183C8C1E /* JWTBase64Coder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		36A7FDE6566AA98B33969E8F8D5F9E18 /* JWTClaimsSetVerifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 98C75371B513352335DF14E30E2E360A /* JWTClaimsSetVerifier.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3842D4B4434F583B72080228F31F79EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		3B095DEFE6DD7AE93E5DD4B038C47293 /* SealdSdk.h in Headers */ = {isa = PBXBuildFile; fileRef = B7FA709AE073B7659D6C8388D5C190AC /* SealdSdk.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3ED717F791BE6DD91DD575F059CC7B96 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		3F84B645BE2AFD51955B65613EC2076B /* JWTCryptoKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 757556AF24EF9E11AE4C34F3AAE104ED /* JWTCryptoKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40798AE45DFA38D1C4564D0401157226 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		4187A9133B1AD175E4FD85B856D8363E /* JWTDeprecations.h in Headers */ = {isa = PBXBuildFile; fileRef = B8DF2C27E6D00A8815FBDC6B617F3F63 /* JWTDeprecations.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		44D3CF722A6994F3F73FE6F60981E498 /* JWTAlgorithmRSBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D2ABE955EB725ACBED587FD81895364 /* JWTAlgorithmRSBase.m */; };
+		4E3805AF3E76C3650D4EE2B39F84454F /* JWTClaimsSetSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6873266AF573D69FED617F4F402D4C69 /* JWTClaimsSetSerializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5364067BBD08B33C78F270C764CC3DB9 /* JWTCoding+VersionOne.h in Headers */ = {isa = PBXBuildFile; fileRef = C3DD3D1ECB8C9D1D48530709327989A1 /* JWTCoding+VersionOne.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		564A05270EDDE6BE9D465D02D97E8052 /* MF_Base64Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = D4AEC7F61937FB0291A8ABBBDA4E8DC1 /* MF_Base64Additions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		5956F6589CE361699305E417B40BF5DE /* JWTAlgorithmHSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F511BD480D3924ECBF4F977FABD9230 /* JWTAlgorithmHSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5D44194FF1F788CD94FC97A9FE92B66C /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 82833FC6B02CA05AF484DB01AEFB63EE /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m */; };
+		60BA9DB93A3FA8B453A9A6857525B95E /* JWTAlgorithmFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = D0A015F284AD60C58A42D59761F3FA74 /* JWTAlgorithmFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		645FF0F6490C368E185B10E21F60F37B /* JWTCoding+VersionThree.m in Sources */ = {isa = PBXBuildFile; fileRef = AD4AE0E4EAA18B04FA497F51CC85D88B /* JWTCoding+VersionThree.m */; };
+		669671D6FBECD3D36651FC60D1E6AA6A /* JWTCoding+ResultTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = F320FD7C5C7E5EF8548BCB04F1458A57 /* JWTCoding+ResultTypes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		671D90A1F695D27EDE89872D32610CD0 /* JWTErrorDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 87557F60C70960C2946DA5A6C2C4E98A /* JWTErrorDescription.m */; };
+		6A68EFA41E3596E85E6F44ADF48B5F1E /* JWTErrorDescription.h in Headers */ = {isa = PBXBuildFile; fileRef = 4DEB7D83BC67E415FA914F14BC7614BB /* JWTErrorDescription.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BE6AC12983C978A865B27E35F35E3AC /* JWTCoding+VersionTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0928660AE23EA53F6EEFD2B6A5E3F00F /* JWTCoding+VersionTwo.m */; };
+		739CA74E5F4C6CD16B7947159C4C679F /* Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A9C92BDCA654BBFBDC963D7094F5BC5 /* Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		742DF648A6F9A4447C50BDF097115DB0 /* JWTClaimsSetVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BA1672292B6A10B0555F6904EAA9D90 /* JWTClaimsSetVerifier.m */; };
+		80CA812AC9926E7819C72B05E1E38343 /* JWTCoding+VersionTwo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2354966CD7D2629DCD23D0603763C105 /* JWTCoding+VersionTwo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		810707C9FA79773E8D645F82D95E6481 /* JWTCryptoSecurity.m in Sources */ = {isa = PBXBuildFile; fileRef = A484111FD25579D034C306BDFA8920A4 /* JWTCryptoSecurity.m */; };
+		8613669AE6FA51FC15462CDB1DBA7D5B /* JWTCoding.h in Headers */ = {isa = PBXBuildFile; fileRef = A45BEF43C5ACA45EB318AB8E85DC59AB /* JWTCoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8C479746E189E44DAE20FFD05A39D774 /* Pods-go-sdk-demo-app-ios-swiftTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 85AC4F204777A378819F2E522D2FC0EB /* Pods-go-sdk-demo-app-ios-swiftTests-dummy.m */; };
+		8F3331FD2FB3D7A092B1F826CA73F149 /* Pods-go-sdk-demo-app-ios-swift-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E6B4A9E4D51A9E82654FB856B548A36E /* Pods-go-sdk-demo-app-ios-swift-dummy.m */; };
+		921CFB44F23FCBF1F764D5725A085E3B /* JWTCryptoKey.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B86F959D6B2C5AFD94332C06DEFB60 /* JWTCryptoKey.m */; };
+		9274EF9FC779BC1A7E9BCC31F5605518 /* JWTRSAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 90C4F892E036F9CA621BB830545D50D8 /* JWTRSAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9CF600C1CDD348E9FCF26E9B23DCC218 /* Base64-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B77DA1CD13956C55A8DCA45FB7F61095 /* Base64-dummy.m */; };
+		9DB5ACF6BD1DADC87DAE9ED92F5C9971 /* JWTAlgorithmESBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A8EB02C412AF52616988A97906636EA /* JWTAlgorithmESBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F2EFA8C68143EF4839F790170243F48 /* MF_Base64Additions.h in Headers */ = {isa = PBXBuildFile; fileRef = B7957A8F51DEC827CC588D73E1B4AB4B /* MF_Base64Additions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A9EA5A3F526865B32835736D6EFDC389 /* JWTCoding+ResultTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD7ECE4DBEFE808E998227F994FD4F /* JWTCoding+ResultTypes.m */; };
+		AB9E197A287A359A3481493701A11030 /* Base64-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D057F7EBABC56FA4E7ABAED73DF32237 /* Base64-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B2C8EADE78390A4A2AA13869F52F340C /* Pods-go-sdk-demo-app-ios-swift-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7B033A02FCA50B4EE80E8EF7F2CDDF05 /* Pods-go-sdk-demo-app-ios-swift-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B51E0DCECAF6945E788C61EBC04999FC /* SealdSdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 9DDE2017E1031808D06A56C6BF894148 /* SealdSdk.m */; };
+		BA2D0BBF4BD60086B36892990FDE7D5E /* SealdSdk-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 29AC5142B33A91D02FEC0433727CC226 /* SealdSdk-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C0A51571A76BF97AD77D7EB90E087BD3 /* JWTClaim.m in Sources */ = {isa = PBXBuildFile; fileRef = CBE4ADD326A99A32EEDF22E44330F5F6 /* JWTClaim.m */; };
+		C34A0A0EDFDF064AA6641868D9A94775 /* JWTAlgorithmRSBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 182B34E217A737D60C07C3762DBC07D7 /* JWTAlgorithmRSBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C48771DB3C57445F9C801C8601C1C83F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */; };
+		D88C1488B613A6998586FBA996F0EF3D /* JWTAlgorithmDataHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 99F5EAAD48669F20E19DE5742CEBC0A3 /* JWTAlgorithmDataHolder.m */; };
+		DA704CB375D600F4491D7DFB040486F6 /* JWTAlgorithmESBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 22BCF480827FAAA376A6D92B137C3535 /* JWTAlgorithmESBase.m */; };
+		DDA7008A40AB3DBCB2C5B9CC5B5012A3 /* JWTClaimsSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B6F22B53C6705282A4BDE504B053C /* JWTClaimsSet.m */; };
+		DEFD16D80B103AF6E52BEF127B95BC2A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3B2A0B779CE31153B2C0D8A7F8DC7FE /* Security.framework */; };
+		DF52F08E2713CDFEBBAC84DE2CC25336 /* JWTClaimsSet.h in Headers */ = {isa = PBXBuildFile; fileRef = AA68BEB13C1A1E2611ED05E557B35DCD /* JWTClaimsSet.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DF7C332ABEC7FB5049597884305A5A17 /* JWTAlgorithmDataHolderChain.h in Headers */ = {isa = PBXBuildFile; fileRef = B49ED3A620F1D028917E3A4BA9F6A28A /* JWTAlgorithmDataHolderChain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F0EDEE24F690A26D3A029BA5DC16D169 /* JWTAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 32D2AA4DD25C94CB1C614F0FA2100899 /* JWTAlgorithm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F2D3C3363D2FBF632B947E27480D41BE /* JWT.h in Headers */ = {isa = PBXBuildFile; fileRef = A6560D0983FB941ED328D847A4F11B80 /* JWT.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FD1D899A33201823678E85CF7F90CD5B /* JWTAlgorithmDataHolderChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A34BA1AA28EA9DCEFE9261430B7E49B /* JWTAlgorithmDataHolderChain.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0409708C4B31F619CD3209F5128418DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB2B17EEE15C8E869A37C1514F4D378E;
+			remoteInfo = Base64;
+		};
+		0EF749EC50B187B07B2419AA5135BD3B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10CEED9C918901B6EEEE691C76624020;
+			remoteInfo = SealdSdk;
+		};
+		8FCEA83D83D05237DDAA06136AD0C83E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F95BD6B7EBE4B40A06D0F914262CA972;
+			remoteInfo = JWT;
+		};
+		CBFEF80A9D4492E7824B5902D69E386A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F95BD6B7EBE4B40A06D0F914262CA972;
+			remoteInfo = JWT;
+		};
+		D17E309F8768FEFCFD3C252C9FF9C1F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB2B17EEE15C8E869A37C1514F4D378E;
+			remoteInfo = Base64;
+		};
+		D692ABCEC1A191789B3E7863A373A08E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10CEED9C918901B6EEEE691C76624020;
+			remoteInfo = SealdSdk;
+		};
+		DA385C667BA0E9527E1005CE28D1AF68 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6CDDAEAF208BA18CE0D801EEBEBA9B75;
+			remoteInfo = "Pods-go-sdk-demo-app-ios-swift";
+		};
+		F6FDE713AC2B8F31C35345F7FFAE5164 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DB2B17EEE15C8E869A37C1514F4D378E;
+			remoteInfo = Base64;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00B116FC326D60904C32FE371B1D28F9 /* Pods-go-sdk-demo-app-ios-swift-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-go-sdk-demo-app-ios-swift-acknowledgements.markdown"; sourceTree = "<group>"; };
+		0928660AE23EA53F6EEFD2B6A5E3F00F /* JWTCoding+VersionTwo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JWTCoding+VersionTwo.m"; path = "Core/Coding/JWTCoding+VersionTwo.m"; sourceTree = "<group>"; };
+		0A34BA1AA28EA9DCEFE9261430B7E49B /* JWTAlgorithmDataHolderChain.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmDataHolderChain.m; path = Core/Algorithms/Holders/JWTAlgorithmDataHolderChain.m; sourceTree = "<group>"; };
+		0BA1672292B6A10B0555F6904EAA9D90 /* JWTClaimsSetVerifier.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTClaimsSetVerifier.m; path = Core/ClaimSet/JWTClaimsSetVerifier.m; sourceTree = "<group>"; };
+		0BB920C375D6D1871DAA367866F0B197 /* Base64.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Base64.debug.xcconfig; sourceTree = "<group>"; };
+		0CB8CA417D10DB80ABB462F471093942 /* JWT-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "JWT-Info.plist"; sourceTree = "<group>"; };
+		1146F9DCA8DEF25FD55CF3631EA0E88A /* Base64.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Base64.release.xcconfig; sourceTree = "<group>"; };
+		12033770BD6B7536169F3A0E102C2BCC /* Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		128F649E2D57109804BE1BEE3679D3F9 /* JWTAlgorithmNone.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmNone.m; path = Core/Algorithms/Base/JWTAlgorithmNone.m; sourceTree = "<group>"; };
+		182B34E217A737D60C07C3762DBC07D7 /* JWTAlgorithmRSBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmRSBase.h; path = Core/Algorithms/RSFamily/JWTAlgorithmRSBase.h; sourceTree = "<group>"; };
+		19ECD5A4D30AAA17DC716ED005A99C9A /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1B5B6F22B53C6705282A4BDE504B053C /* JWTClaimsSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTClaimsSet.m; path = Core/ClaimSet/JWTClaimsSet.m; sourceTree = "<group>"; };
+		1CEA2B76183D0F72B54158A9BC20D4C4 /* Pods-go-sdk-demo-app-ios-swift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swift.debug.xcconfig"; sourceTree = "<group>"; };
+		1FFD7ECE4DBEFE808E998227F994FD4F /* JWTCoding+ResultTypes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JWTCoding+ResultTypes.m"; path = "Core/Coding/JWTCoding+ResultTypes.m"; sourceTree = "<group>"; };
+		22BCF480827FAAA376A6D92B137C3535 /* JWTAlgorithmESBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmESBase.m; path = Core/Algorithms/ESFamily/JWTAlgorithmESBase.m; sourceTree = "<group>"; };
+		2354966CD7D2629DCD23D0603763C105 /* JWTCoding+VersionTwo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JWTCoding+VersionTwo.h"; path = "Core/Coding/JWTCoding+VersionTwo.h"; sourceTree = "<group>"; };
+		27C4FE8BAF71DACA388F3542AB735104 /* JWT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JWT.release.xcconfig; sourceTree = "<group>"; };
+		27D26114179AE7F2A25A4D600E5D02B1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		292D945BA3B0E40B34B4B6C83323FF24 /* Pods-go-sdk-demo-app-ios-swift */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-go-sdk-demo-app-ios-swift"; path = Pods_go_sdk_demo_app_ios_swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29AC5142B33A91D02FEC0433727CC226 /* SealdSdk-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SealdSdk-umbrella.h"; sourceTree = "<group>"; };
+		2A8EB02C412AF52616988A97906636EA /* JWTAlgorithmESBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmESBase.h; path = Core/Algorithms/ESFamily/JWTAlgorithmESBase.h; sourceTree = "<group>"; };
+		2CE6F06D4227DCE4B1D8BDE8A2AEC1FA /* SealdSdk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SealdSdk.release.xcconfig; sourceTree = "<group>"; };
+		2DF82EE18981E98BA2339ECE2AB5F350 /* JWT */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = JWT; path = JWT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		311C5BB3FE41E41CEBDAC8F45B22C7B7 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.plist"; sourceTree = "<group>"; };
+		32D2AA4DD25C94CB1C614F0FA2100899 /* JWTAlgorithm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithm.h; path = Core/Algorithms/Base/JWTAlgorithm.h; sourceTree = "<group>"; };
+		33FCB635B460B4E59B647C7215B68C43 /* SealdSdk.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SealdSdk.modulemap; sourceTree = "<group>"; };
+		3AC08F8E726FA11F4B7F7A0469C1A24E /* Pods-go-sdk-demo-app-ios-swiftTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-go-sdk-demo-app-ios-swiftTests.modulemap"; sourceTree = "<group>"; };
+		3ACA65B32C0B50C53DC16BB065395032 /* Base64-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Base64-prefix.pch"; sourceTree = "<group>"; };
+		3DEB4AB6437BCBAAB605646CA0AC0B81 /* Base64.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Base64.modulemap; sourceTree = "<group>"; };
+		3EB679316714024E37CF341E6C15F7B3 /* Pods-go-sdk-demo-app-ios-swiftTests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-go-sdk-demo-app-ios-swiftTests"; path = Pods_go_sdk_demo_app_ios_swiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F511BD480D3924ECBF4F977FABD9230 /* JWTAlgorithmHSBase.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmHSBase.h; path = Core/Algorithms/HSFamily/JWTAlgorithmHSBase.h; sourceTree = "<group>"; };
+		49BE83F217E0074DCFC04E22DACFEAA9 /* Pods-go-sdk-demo-app-ios-swiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swiftTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4DEB7D83BC67E415FA914F14BC7614BB /* JWTErrorDescription.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTErrorDescription.h; path = Core/Supplement/JWTErrorDescription.h; sourceTree = "<group>"; };
+		4F2B43FFC56E04581AE2F599BC73763D /* Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		5156FD425EE64308EF001EF128C52014 /* JWTCoding+VersionOne.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JWTCoding+VersionOne.m"; path = "Core/Coding/JWTCoding+VersionOne.m"; sourceTree = "<group>"; };
+		52934ABB62C2D64344EDABA204D66B48 /* JWTCryptoSecurity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTCryptoSecurity.h; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoSecurity.h; sourceTree = "<group>"; };
+		5726E01E7580E7A7B99BCFE2510DC400 /* JWTAlgorithmNone.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmNone.h; path = Core/Algorithms/Base/JWTAlgorithmNone.h; sourceTree = "<group>"; };
+		575E032B5B292B6C76F0859EFF2A253F /* Pods-go-sdk-demo-app-ios-swiftTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swiftTests-Info.plist"; sourceTree = "<group>"; };
+		5C74058C1AF1407DD5CF8BBF1247A3AD /* Pods-go-sdk-demo-app-ios-swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swift.release.xcconfig"; sourceTree = "<group>"; };
+		5C83A2060B2E312BAA42E0297CD123AE /* Pods-go-sdk-demo-app-ios-swift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-go-sdk-demo-app-ios-swift.modulemap"; sourceTree = "<group>"; };
+		61B1A4058BBFE2D8029DE8E1F6161FDD /* SealdSdk-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "SealdSdk-xcframeworks.sh"; sourceTree = "<group>"; };
+		6643310012BFB0FCF3D42264383E37AE /* JWTBase64Coder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTBase64Coder.m; path = Core/Supplement/JWTBase64Coder.m; sourceTree = "<group>"; };
+		6873266AF573D69FED617F4F402D4C69 /* JWTClaimsSetSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTClaimsSetSerializer.h; path = Core/ClaimSet/JWTClaimsSetSerializer.h; sourceTree = "<group>"; };
+		6C1A179E20DA586767D92C2FE4EB6D34 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-frameworks.sh"; sourceTree = "<group>"; };
+		6CEAF4DB6B8B993006E15BC786F23FBD /* JWT.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = JWT.modulemap; sourceTree = "<group>"; };
+		6F3328B07F379C61025723DCD48DCC66 /* Pods-go-sdk-demo-app-ios-swift-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-go-sdk-demo-app-ios-swift-frameworks.sh"; sourceTree = "<group>"; };
+		739F11BA9C31B76FCF733D419B1DEF9E /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests"; path = Pods_go_sdk_demo_app_ios_swift_go_sdk_demo_app_ios_swiftUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		757556AF24EF9E11AE4C34F3AAE104ED /* JWTCryptoKey.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTCryptoKey.h; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoKey.h; sourceTree = "<group>"; };
+		7B033A02FCA50B4EE80E8EF7F2CDDF05 /* Pods-go-sdk-demo-app-ios-swift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-go-sdk-demo-app-ios-swift-umbrella.h"; sourceTree = "<group>"; };
+		7D1813D1C6EB3921E8A2A8A911CC2731 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h"; sourceTree = "<group>"; };
+		7EC8803E103D95AE1616E969498F9C17 /* JWTAlgorithmHSBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmHSBase.m; path = Core/Algorithms/HSFamily/JWTAlgorithmHSBase.m; sourceTree = "<group>"; };
+		7F20E47091AA99520C92BFC35E4E28FB /* SealdSdk-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SealdSdk-Info.plist"; sourceTree = "<group>"; };
+		8102E13E8C22221C689D0F55A7A61A2E /* SealdSdk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SealdSdk.debug.xcconfig; sourceTree = "<group>"; };
+		8276799F410A7709C91BEDA929B9D524 /* SealdSdk */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SealdSdk; path = SealdSdk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82833FC6B02CA05AF484DB01AEFB63EE /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m"; sourceTree = "<group>"; };
+		85AC4F204777A378819F2E522D2FC0EB /* Pods-go-sdk-demo-app-ios-swiftTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-go-sdk-demo-app-ios-swiftTests-dummy.m"; sourceTree = "<group>"; };
+		87557F60C70960C2946DA5A6C2C4E98A /* JWTErrorDescription.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTErrorDescription.m; path = Core/Supplement/JWTErrorDescription.m; sourceTree = "<group>"; };
+		8ED79232977E2DA28AF63D6E8DACD1F4 /* JWTCoding+VersionThree.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JWTCoding+VersionThree.h"; path = "Core/Coding/JWTCoding+VersionThree.h"; sourceTree = "<group>"; };
+		905D0C16831DD034BE25DFFCB7944B5F /* JWTAlgorithmFactory.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmFactory.m; path = Core/Algorithms/Base/JWTAlgorithmFactory.m; sourceTree = "<group>"; };
+		90C4F892E036F9CA621BB830545D50D8 /* JWTRSAlgorithm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTRSAlgorithm.h; path = Core/Algorithms/RSFamily/JWTRSAlgorithm.h; sourceTree = "<group>"; };
+		952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		98C75371B513352335DF14E30E2E360A /* JWTClaimsSetVerifier.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTClaimsSetVerifier.h; path = Core/ClaimSet/JWTClaimsSetVerifier.h; sourceTree = "<group>"; };
+		99F5EAAD48669F20E19DE5742CEBC0A3 /* JWTAlgorithmDataHolder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmDataHolder.m; path = Core/Algorithms/Holders/JWTAlgorithmDataHolder.m; sourceTree = "<group>"; };
+		9A9C92BDCA654BBFBDC963D7094F5BC5 /* Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h"; sourceTree = "<group>"; };
+		9D2ABE955EB725ACBED587FD81895364 /* JWTAlgorithmRSBase.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTAlgorithmRSBase.m; path = Core/Algorithms/RSFamily/JWTAlgorithmRSBase.m; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D9B316E5C2024AC3181708F09238141 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.modulemap"; sourceTree = "<group>"; };
+		9DDE2017E1031808D06A56C6BF894148 /* SealdSdk.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SealdSdk.m; path = SealdSdk/Classes/SealdSdk.m; sourceTree = "<group>"; };
+		A45BEF43C5ACA45EB318AB8E85DC59AB /* JWTCoding.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTCoding.h; path = Core/Coding/JWTCoding.h; sourceTree = "<group>"; };
+		A484111FD25579D034C306BDFA8920A4 /* JWTCryptoSecurity.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTCryptoSecurity.m; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoSecurity.m; sourceTree = "<group>"; };
+		A6560D0983FB941ED328D847A4F11B80 /* JWT.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWT.h; path = Core/FrameworkSupplement/JWT.h; sourceTree = "<group>"; };
+		A706A9994B6971C5A71DD2C35D6214CD /* JWTAlgorithmDataHolder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmDataHolder.h; path = Core/Algorithms/Holders/JWTAlgorithmDataHolder.h; sourceTree = "<group>"; };
+		A7C84C55821E39D006388F396C496022 /* JWTCryptoKeyExtractor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTCryptoKeyExtractor.m; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoKeyExtractor.m; sourceTree = "<group>"; };
+		AA68BEB13C1A1E2611ED05E557B35DCD /* JWTClaimsSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTClaimsSet.h; path = Core/ClaimSet/JWTClaimsSet.h; sourceTree = "<group>"; };
+		AD4AE0E4EAA18B04FA497F51CC85D88B /* JWTCoding+VersionThree.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "JWTCoding+VersionThree.m"; path = "Core/Coding/JWTCoding+VersionThree.m"; sourceTree = "<group>"; };
+		B17B0EC23C6B673F75FDE28AD0D1CD45 /* JWT-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "JWT-dummy.m"; sourceTree = "<group>"; };
+		B1BEC041CF9720C150494CAC2C3FC470 /* JWTClaimsSetSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTClaimsSetSerializer.m; path = Core/ClaimSet/JWTClaimsSetSerializer.m; sourceTree = "<group>"; };
+		B49ED3A620F1D028917E3A4BA9F6A28A /* JWTAlgorithmDataHolderChain.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmDataHolderChain.h; path = Core/Algorithms/Holders/JWTAlgorithmDataHolderChain.h; sourceTree = "<group>"; };
+		B5B86F959D6B2C5AFD94332C06DEFB60 /* JWTCryptoKey.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTCryptoKey.m; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoKey.m; sourceTree = "<group>"; };
+		B77DA1CD13956C55A8DCA45FB7F61095 /* Base64-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Base64-dummy.m"; sourceTree = "<group>"; };
+		B7957A8F51DEC827CC588D73E1B4AB4B /* MF_Base64Additions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MF_Base64Additions.h; path = Base64/MF_Base64Additions.h; sourceTree = "<group>"; };
+		B7D09FC0A4CDCD82960421CA9646297F /* JWT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = JWT.debug.xcconfig; sourceTree = "<group>"; };
+		B7FA709AE073B7659D6C8388D5C190AC /* SealdSdk.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SealdSdk.h; path = SealdSdk/Classes/SealdSdk.h; sourceTree = "<group>"; };
+		B8DF2C27E6D00A8815FBDC6B617F3F63 /* JWTDeprecations.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTDeprecations.h; path = Core/Supplement/JWTDeprecations.h; sourceTree = "<group>"; };
+		B8F8729CA87E1022936921760B47ADC1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BBDA0EA859F245BF4EEF2E6C31CC4CD0 /* SealdSdk-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SealdSdk-dummy.m"; sourceTree = "<group>"; };
+		C3B2A0B779CE31153B2C0D8A7F8DC7FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		C3DD3D1ECB8C9D1D48530709327989A1 /* JWTCoding+VersionOne.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JWTCoding+VersionOne.h"; path = "Core/Coding/JWTCoding+VersionOne.h"; sourceTree = "<group>"; };
+		C591682DF1F79669CA9B2081FCDD2F61 /* Pods-go-sdk-demo-app-ios-swift-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swift-acknowledgements.plist"; sourceTree = "<group>"; };
+		C9D6A2844473676E7029F974E36934F3 /* JWTCoding.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTCoding.m; path = Core/Coding/JWTCoding.m; sourceTree = "<group>"; };
+		CB08AEABDE1CE181F728ACC8515D5226 /* Pods-go-sdk-demo-app-ios-swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swift-Info.plist"; sourceTree = "<group>"; };
+		CBE4ADD326A99A32EEDF22E44330F5F6 /* JWTClaim.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JWTClaim.m; path = Core/ClaimSet/JWTClaim.m; sourceTree = "<group>"; };
+		CECF8EA1678604C161B45F4BC952929B /* JWTClaim.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTClaim.h; path = Core/ClaimSet/JWTClaim.h; sourceTree = "<group>"; };
+		D057F7EBABC56FA4E7ABAED73DF32237 /* Base64-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Base64-umbrella.h"; sourceTree = "<group>"; };
+		D0A015F284AD60C58A42D59761F3FA74 /* JWTAlgorithmFactory.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTAlgorithmFactory.h; path = Core/Algorithms/Base/JWTAlgorithmFactory.h; sourceTree = "<group>"; };
+		D4AEC7F61937FB0291A8ABBBDA4E8DC1 /* MF_Base64Additions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MF_Base64Additions.m; path = Base64/MF_Base64Additions.m; sourceTree = "<group>"; };
+		D7B2DD3EBC0BB89093A9E0610D03D2B4 /* JWTCryptoKeyExtractor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTCryptoKeyExtractor.h; path = Core/Algorithms/RSFamily/RSKeys/JWTCryptoKeyExtractor.h; sourceTree = "<group>"; };
+		DA3E51A8F08DDAE9C0C38FB4E9F57D83 /* SealdSdkInternals.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = SealdSdkInternals.xcframework; path = SealdSdk/Frameworks/SealdSdkInternals.xcframework; sourceTree = "<group>"; };
+		DDA9AF6F28381C2AFBA12304183C8C1E /* JWTBase64Coder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JWTBase64Coder.h; path = Core/Supplement/JWTBase64Coder.h; sourceTree = "<group>"; };
+		E08C779E50631C7CF499C9D92CBF2143 /* Base64 */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Base64; path = Base64.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E13B42B275DB96C398E5BB6CD66D7EB8 /* SealdSdk-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SealdSdk-prefix.pch"; sourceTree = "<group>"; };
+		E6B4A9E4D51A9E82654FB856B548A36E /* Pods-go-sdk-demo-app-ios-swift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-go-sdk-demo-app-ios-swift-dummy.m"; sourceTree = "<group>"; };
+		EADE9A86643CC4C46158A92293191D92 /* Base64-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Base64-Info.plist"; sourceTree = "<group>"; };
+		EC5D02F55AA80D26671B2573AF67ACDD /* Pods-go-sdk-demo-app-ios-swiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-go-sdk-demo-app-ios-swiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		F320FD7C5C7E5EF8548BCB04F1458A57 /* JWTCoding+ResultTypes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "JWTCoding+ResultTypes.h"; path = "Core/Coding/JWTCoding+ResultTypes.h"; sourceTree = "<group>"; };
+		FAD0E43AFA7543AB2E4093682A1DACA6 /* JWT-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "JWT-prefix.pch"; sourceTree = "<group>"; };
+		FD6006014D24A66DE114872FC2CC1B52 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-Info.plist"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2232DD9BF1AF73B1DD43B301769C3898 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16FBC4E3BA2E075A03F930CE6944154C /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A8CEB5D1CD14DA00F6F31FBD697171F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C48771DB3C57445F9C801C8601C1C83F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4FB7616B72CBB9A89716DD80D23BF19F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A8A162F75DDD244D702C8398D8C5516 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		70880FDAA455F08185C9E0D14E59D989 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3842D4B4434F583B72080228F31F79EF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9FE3A9725FE44190F628315E42606DF0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40798AE45DFA38D1C4564D0401157226 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B2DB8B0064E5A0441F0BC723C062375D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ED717F791BE6DD91DD575F059CC7B96 /* Foundation.framework in Frameworks */,
+				DEFD16D80B103AF6E52BEF127B95BC2A /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0C1198F015F955E9E88B25CE2F7CF7D9 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				EE1700AE22CEAFCB61D04FD2030E9E54 /* Pods-go-sdk-demo-app-ios-swift */,
+				6FC83B7D842FB328FC68CC7EA753E049 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */,
+				64E2B6D79ECF354B47887FBD5115215F /* Pods-go-sdk-demo-app-ios-swiftTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7CE426AC267333500FABE7BA0A5A42A0 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1EC75436FA097E0A89D4C51A7E0B2672 /* SealdSdk */ = {
+			isa = PBXGroup;
+			children = (
+				B7FA709AE073B7659D6C8388D5C190AC /* SealdSdk.h */,
+				9DDE2017E1031808D06A56C6BF894148 /* SealdSdk.m */,
+				F56350BE4E617A55D55402876974F568 /* Frameworks */,
+				767E34AEA381514E642FD6DD8B17FFA2 /* Support Files */,
+			);
+			name = SealdSdk;
+			path = SealdSdk;
+			sourceTree = "<group>";
+		};
+		297DF4B1454DEE4A9052A4EB31F837B7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E08C779E50631C7CF499C9D92CBF2143 /* Base64 */,
+				2DF82EE18981E98BA2339ECE2AB5F350 /* JWT */,
+				292D945BA3B0E40B34B4B6C83323FF24 /* Pods-go-sdk-demo-app-ios-swift */,
+				739F11BA9C31B76FCF733D419B1DEF9E /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */,
+				3EB679316714024E37CF341E6C15F7B3 /* Pods-go-sdk-demo-app-ios-swiftTests */,
+				8276799F410A7709C91BEDA929B9D524 /* SealdSdk */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5AF99C0CA4D7077EF9BB34957DB9E7C1 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6CEAF4DB6B8B993006E15BC786F23FBD /* JWT.modulemap */,
+				B17B0EC23C6B673F75FDE28AD0D1CD45 /* JWT-dummy.m */,
+				0CB8CA417D10DB80ABB462F471093942 /* JWT-Info.plist */,
+				FAD0E43AFA7543AB2E4093682A1DACA6 /* JWT-prefix.pch */,
+				B7D09FC0A4CDCD82960421CA9646297F /* JWT.debug.xcconfig */,
+				27C4FE8BAF71DACA388F3542AB735104 /* JWT.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/JWT";
+			sourceTree = "<group>";
+		};
+		64E2B6D79ECF354B47887FBD5115215F /* Pods-go-sdk-demo-app-ios-swiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				3AC08F8E726FA11F4B7F7A0469C1A24E /* Pods-go-sdk-demo-app-ios-swiftTests.modulemap */,
+				4F2B43FFC56E04581AE2F599BC73763D /* Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.markdown */,
+				12033770BD6B7536169F3A0E102C2BCC /* Pods-go-sdk-demo-app-ios-swiftTests-acknowledgements.plist */,
+				85AC4F204777A378819F2E522D2FC0EB /* Pods-go-sdk-demo-app-ios-swiftTests-dummy.m */,
+				575E032B5B292B6C76F0859EFF2A253F /* Pods-go-sdk-demo-app-ios-swiftTests-Info.plist */,
+				9A9C92BDCA654BBFBDC963D7094F5BC5 /* Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h */,
+				49BE83F217E0074DCFC04E22DACFEAA9 /* Pods-go-sdk-demo-app-ios-swiftTests.debug.xcconfig */,
+				EC5D02F55AA80D26671B2573AF67ACDD /* Pods-go-sdk-demo-app-ios-swiftTests.release.xcconfig */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swiftTests";
+			path = "Target Support Files/Pods-go-sdk-demo-app-ios-swiftTests";
+			sourceTree = "<group>";
+		};
+		6C339F7CCE138831CFB2D939DA281DE1 /* JWT */ = {
+			isa = PBXGroup;
+			children = (
+				A6560D0983FB941ED328D847A4F11B80 /* JWT.h */,
+				32D2AA4DD25C94CB1C614F0FA2100899 /* JWTAlgorithm.h */,
+				A706A9994B6971C5A71DD2C35D6214CD /* JWTAlgorithmDataHolder.h */,
+				99F5EAAD48669F20E19DE5742CEBC0A3 /* JWTAlgorithmDataHolder.m */,
+				B49ED3A620F1D028917E3A4BA9F6A28A /* JWTAlgorithmDataHolderChain.h */,
+				0A34BA1AA28EA9DCEFE9261430B7E49B /* JWTAlgorithmDataHolderChain.m */,
+				2A8EB02C412AF52616988A97906636EA /* JWTAlgorithmESBase.h */,
+				22BCF480827FAAA376A6D92B137C3535 /* JWTAlgorithmESBase.m */,
+				D0A015F284AD60C58A42D59761F3FA74 /* JWTAlgorithmFactory.h */,
+				905D0C16831DD034BE25DFFCB7944B5F /* JWTAlgorithmFactory.m */,
+				3F511BD480D3924ECBF4F977FABD9230 /* JWTAlgorithmHSBase.h */,
+				7EC8803E103D95AE1616E969498F9C17 /* JWTAlgorithmHSBase.m */,
+				5726E01E7580E7A7B99BCFE2510DC400 /* JWTAlgorithmNone.h */,
+				128F649E2D57109804BE1BEE3679D3F9 /* JWTAlgorithmNone.m */,
+				182B34E217A737D60C07C3762DBC07D7 /* JWTAlgorithmRSBase.h */,
+				9D2ABE955EB725ACBED587FD81895364 /* JWTAlgorithmRSBase.m */,
+				DDA9AF6F28381C2AFBA12304183C8C1E /* JWTBase64Coder.h */,
+				6643310012BFB0FCF3D42264383E37AE /* JWTBase64Coder.m */,
+				CECF8EA1678604C161B45F4BC952929B /* JWTClaim.h */,
+				CBE4ADD326A99A32EEDF22E44330F5F6 /* JWTClaim.m */,
+				AA68BEB13C1A1E2611ED05E557B35DCD /* JWTClaimsSet.h */,
+				1B5B6F22B53C6705282A4BDE504B053C /* JWTClaimsSet.m */,
+				6873266AF573D69FED617F4F402D4C69 /* JWTClaimsSetSerializer.h */,
+				B1BEC041CF9720C150494CAC2C3FC470 /* JWTClaimsSetSerializer.m */,
+				98C75371B513352335DF14E30E2E360A /* JWTClaimsSetVerifier.h */,
+				0BA1672292B6A10B0555F6904EAA9D90 /* JWTClaimsSetVerifier.m */,
+				A45BEF43C5ACA45EB318AB8E85DC59AB /* JWTCoding.h */,
+				C9D6A2844473676E7029F974E36934F3 /* JWTCoding.m */,
+				F320FD7C5C7E5EF8548BCB04F1458A57 /* JWTCoding+ResultTypes.h */,
+				1FFD7ECE4DBEFE808E998227F994FD4F /* JWTCoding+ResultTypes.m */,
+				C3DD3D1ECB8C9D1D48530709327989A1 /* JWTCoding+VersionOne.h */,
+				5156FD425EE64308EF001EF128C52014 /* JWTCoding+VersionOne.m */,
+				8ED79232977E2DA28AF63D6E8DACD1F4 /* JWTCoding+VersionThree.h */,
+				AD4AE0E4EAA18B04FA497F51CC85D88B /* JWTCoding+VersionThree.m */,
+				2354966CD7D2629DCD23D0603763C105 /* JWTCoding+VersionTwo.h */,
+				0928660AE23EA53F6EEFD2B6A5E3F00F /* JWTCoding+VersionTwo.m */,
+				757556AF24EF9E11AE4C34F3AAE104ED /* JWTCryptoKey.h */,
+				B5B86F959D6B2C5AFD94332C06DEFB60 /* JWTCryptoKey.m */,
+				D7B2DD3EBC0BB89093A9E0610D03D2B4 /* JWTCryptoKeyExtractor.h */,
+				A7C84C55821E39D006388F396C496022 /* JWTCryptoKeyExtractor.m */,
+				52934ABB62C2D64344EDABA204D66B48 /* JWTCryptoSecurity.h */,
+				A484111FD25579D034C306BDFA8920A4 /* JWTCryptoSecurity.m */,
+				B8DF2C27E6D00A8815FBDC6B617F3F63 /* JWTDeprecations.h */,
+				4DEB7D83BC67E415FA914F14BC7614BB /* JWTErrorDescription.h */,
+				87557F60C70960C2946DA5A6C2C4E98A /* JWTErrorDescription.m */,
+				90C4F892E036F9CA621BB830545D50D8 /* JWTRSAlgorithm.h */,
+				5AF99C0CA4D7077EF9BB34957DB9E7C1 /* Support Files */,
+			);
+			name = JWT;
+			path = JWT;
+			sourceTree = "<group>";
+		};
+		6FC83B7D842FB328FC68CC7EA753E049 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9D9B316E5C2024AC3181708F09238141 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.modulemap */,
+				27D26114179AE7F2A25A4D600E5D02B1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.markdown */,
+				311C5BB3FE41E41CEBDAC8F45B22C7B7 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-acknowledgements.plist */,
+				82833FC6B02CA05AF484DB01AEFB63EE /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m */,
+				6C1A179E20DA586767D92C2FE4EB6D34 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-frameworks.sh */,
+				FD6006014D24A66DE114872FC2CC1B52 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-Info.plist */,
+				7D1813D1C6EB3921E8A2A8A911CC2731 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h */,
+				B8F8729CA87E1022936921760B47ADC1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.debug.xcconfig */,
+				19ECD5A4D30AAA17DC716ED005A99C9A /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.release.xcconfig */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests";
+			path = "Target Support Files/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests";
+			sourceTree = "<group>";
+		};
+		767E34AEA381514E642FD6DD8B17FFA2 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				33FCB635B460B4E59B647C7215B68C43 /* SealdSdk.modulemap */,
+				BBDA0EA859F245BF4EEF2E6C31CC4CD0 /* SealdSdk-dummy.m */,
+				7F20E47091AA99520C92BFC35E4E28FB /* SealdSdk-Info.plist */,
+				E13B42B275DB96C398E5BB6CD66D7EB8 /* SealdSdk-prefix.pch */,
+				29AC5142B33A91D02FEC0433727CC226 /* SealdSdk-umbrella.h */,
+				61B1A4058BBFE2D8029DE8E1F6161FDD /* SealdSdk-xcframeworks.sh */,
+				8102E13E8C22221C689D0F55A7A61A2E /* SealdSdk.debug.xcconfig */,
+				2CE6F06D4227DCE4B1D8BDE8A2AEC1FA /* SealdSdk.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SealdSdk";
+			sourceTree = "<group>";
+		};
+		7CE426AC267333500FABE7BA0A5A42A0 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				952925E838A0DE4D7BDC4EE54022633D /* Foundation.framework */,
+				C3B2A0B779CE31153B2C0D8A7F8DC7FE /* Security.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		992215B6DD4F03050603F746AF8C3386 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3DEB4AB6437BCBAAB605646CA0AC0B81 /* Base64.modulemap */,
+				B77DA1CD13956C55A8DCA45FB7F61095 /* Base64-dummy.m */,
+				EADE9A86643CC4C46158A92293191D92 /* Base64-Info.plist */,
+				3ACA65B32C0B50C53DC16BB065395032 /* Base64-prefix.pch */,
+				D057F7EBABC56FA4E7ABAED73DF32237 /* Base64-umbrella.h */,
+				0BB920C375D6D1871DAA367866F0B197 /* Base64.debug.xcconfig */,
+				1146F9DCA8DEF25FD55CF3631EA0E88A /* Base64.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Base64";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				1628BF05B4CAFDCC3549A101F5A10A17 /* Frameworks */,
+				E93AA3477451CCA4C39CAF81FFB36BB5 /* Pods */,
+				297DF4B1454DEE4A9052A4EB31F837B7 /* Products */,
+				0C1198F015F955E9E88B25CE2F7CF7D9 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		E93AA3477451CCA4C39CAF81FFB36BB5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FFD295A2172D5E076A684B0C4F77FA67 /* Base64 */,
+				6C339F7CCE138831CFB2D939DA281DE1 /* JWT */,
+				1EC75436FA097E0A89D4C51A7E0B2672 /* SealdSdk */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EE1700AE22CEAFCB61D04FD2030E9E54 /* Pods-go-sdk-demo-app-ios-swift */ = {
+			isa = PBXGroup;
+			children = (
+				5C83A2060B2E312BAA42E0297CD123AE /* Pods-go-sdk-demo-app-ios-swift.modulemap */,
+				00B116FC326D60904C32FE371B1D28F9 /* Pods-go-sdk-demo-app-ios-swift-acknowledgements.markdown */,
+				C591682DF1F79669CA9B2081FCDD2F61 /* Pods-go-sdk-demo-app-ios-swift-acknowledgements.plist */,
+				E6B4A9E4D51A9E82654FB856B548A36E /* Pods-go-sdk-demo-app-ios-swift-dummy.m */,
+				6F3328B07F379C61025723DCD48DCC66 /* Pods-go-sdk-demo-app-ios-swift-frameworks.sh */,
+				CB08AEABDE1CE181F728ACC8515D5226 /* Pods-go-sdk-demo-app-ios-swift-Info.plist */,
+				7B033A02FCA50B4EE80E8EF7F2CDDF05 /* Pods-go-sdk-demo-app-ios-swift-umbrella.h */,
+				1CEA2B76183D0F72B54158A9BC20D4C4 /* Pods-go-sdk-demo-app-ios-swift.debug.xcconfig */,
+				5C74058C1AF1407DD5CF8BBF1247A3AD /* Pods-go-sdk-demo-app-ios-swift.release.xcconfig */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swift";
+			path = "Target Support Files/Pods-go-sdk-demo-app-ios-swift";
+			sourceTree = "<group>";
+		};
+		F56350BE4E617A55D55402876974F568 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA3E51A8F08DDAE9C0C38FB4E9F57D83 /* SealdSdkInternals.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFD295A2172D5E076A684B0C4F77FA67 /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				B7957A8F51DEC827CC588D73E1B4AB4B /* MF_Base64Additions.h */,
+				D4AEC7F61937FB0291A8ABBBDA4E8DC1 /* MF_Base64Additions.m */,
+				992215B6DD4F03050603F746AF8C3386 /* Support Files */,
+			);
+			name = Base64;
+			path = Base64;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		1515E461172873D741E019E6C50EAE74 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB9E197A287A359A3481493701A11030 /* Base64-umbrella.h in Headers */,
+				9F2EFA8C68143EF4839F790170243F48 /* MF_Base64Additions.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40649AB00E024E0078CE90E9D5D3F028 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B2C8EADE78390A4A2AA13869F52F340C /* Pods-go-sdk-demo-app-ios-swift-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40F26F13B90084D63D764614C578E27D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2602719BA624D2931267EF1CCE7D6EF1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94C181BABA591FE792E4DCFEE76699E1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3B095DEFE6DD7AE93E5DD4B038C47293 /* SealdSdk.h in Headers */,
+				BA2D0BBF4BD60086B36892990FDE7D5E /* SealdSdk-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EF1AFD471A0D1876D1DE408594D982B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				739CA74E5F4C6CD16B7947159C4C679F /* Pods-go-sdk-demo-app-ios-swiftTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C65B29D9E7AD2BA00F1DBD0E0AB0BC82 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F2D3C3363D2FBF632B947E27480D41BE /* JWT.h in Headers */,
+				F0EDEE24F690A26D3A029BA5DC16D169 /* JWTAlgorithm.h in Headers */,
+				2FC6F4B202D4B94F0F938152AC027961 /* JWTAlgorithmDataHolder.h in Headers */,
+				DF7C332ABEC7FB5049597884305A5A17 /* JWTAlgorithmDataHolderChain.h in Headers */,
+				9DB5ACF6BD1DADC87DAE9ED92F5C9971 /* JWTAlgorithmESBase.h in Headers */,
+				60BA9DB93A3FA8B453A9A6857525B95E /* JWTAlgorithmFactory.h in Headers */,
+				5956F6589CE361699305E417B40BF5DE /* JWTAlgorithmHSBase.h in Headers */,
+				25FC2594FF45378FA8CE6CA249D4552A /* JWTAlgorithmNone.h in Headers */,
+				C34A0A0EDFDF064AA6641868D9A94775 /* JWTAlgorithmRSBase.h in Headers */,
+				31EBDD00FC2808A5F6F514710A1C4003 /* JWTBase64Coder.h in Headers */,
+				06887A43F00D5E78B6EDBAF1A8863D90 /* JWTClaim.h in Headers */,
+				DF52F08E2713CDFEBBAC84DE2CC25336 /* JWTClaimsSet.h in Headers */,
+				4E3805AF3E76C3650D4EE2B39F84454F /* JWTClaimsSetSerializer.h in Headers */,
+				36A7FDE6566AA98B33969E8F8D5F9E18 /* JWTClaimsSetVerifier.h in Headers */,
+				8613669AE6FA51FC15462CDB1DBA7D5B /* JWTCoding.h in Headers */,
+				669671D6FBECD3D36651FC60D1E6AA6A /* JWTCoding+ResultTypes.h in Headers */,
+				5364067BBD08B33C78F270C764CC3DB9 /* JWTCoding+VersionOne.h in Headers */,
+				170B2D33D4FD0F5FDA077C0D62927D76 /* JWTCoding+VersionThree.h in Headers */,
+				80CA812AC9926E7819C72B05E1E38343 /* JWTCoding+VersionTwo.h in Headers */,
+				3F84B645BE2AFD51955B65613EC2076B /* JWTCryptoKey.h in Headers */,
+				0FE303655868C13CA6646E55042F70F0 /* JWTCryptoKeyExtractor.h in Headers */,
+				0EB3444F7483CBA40A5363AA852E53E7 /* JWTCryptoSecurity.h in Headers */,
+				4187A9133B1AD175E4FD85B856D8363E /* JWTDeprecations.h in Headers */,
+				6A68EFA41E3596E85E6F44ADF48B5F1E /* JWTErrorDescription.h in Headers */,
+				9274EF9FC779BC1A7E9BCC31F5605518 /* JWTRSAlgorithm.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		10CEED9C918901B6EEEE691C76624020 /* SealdSdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A653A30F5BF39D2CCB224B3D0668E983 /* Build configuration list for PBXNativeTarget "SealdSdk" */;
+			buildPhases = (
+				94C181BABA591FE792E4DCFEE76699E1 /* Headers */,
+				333C5697A57254B3348F5756F003CCB2 /* [CP] Copy XCFrameworks */,
+				7CD6E8627403DE36A0C62E5EAE88972F /* Sources */,
+				2232DD9BF1AF73B1DD43B301769C3898 /* Frameworks */,
+				038B99A653A11665935C24E0604F578C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SealdSdk;
+			productName = SealdSdk;
+			productReference = 8276799F410A7709C91BEDA929B9D524 /* SealdSdk */;
+			productType = "com.apple.product-type.framework";
+		};
+		502FBB071073968963D57B21476786A5 /* Pods-go-sdk-demo-app-ios-swiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 487C4DCB18B47828D0813E7B8C0FDA4D /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swiftTests" */;
+			buildPhases = (
+				9EF1AFD471A0D1876D1DE408594D982B /* Headers */,
+				4794EE1B4FCDDFBCC3B93CCD31AE7553 /* Sources */,
+				70880FDAA455F08185C9E0D14E59D989 /* Frameworks */,
+				93C5B25DE5CFA6F6805186F1FD384C25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				259BA3661A6DBFD738E1C900337388E0 /* PBXTargetDependency */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swiftTests";
+			productName = Pods_go_sdk_demo_app_ios_swiftTests;
+			productReference = 3EB679316714024E37CF341E6C15F7B3 /* Pods-go-sdk-demo-app-ios-swiftTests */;
+			productType = "com.apple.product-type.framework";
+		};
+		6CDDAEAF208BA18CE0D801EEBEBA9B75 /* Pods-go-sdk-demo-app-ios-swift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AAB7502EA9CB78B582B9759B4C0FD799 /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swift" */;
+			buildPhases = (
+				40649AB00E024E0078CE90E9D5D3F028 /* Headers */,
+				5C5AD2634679BCCB320C943C65B0ADCE /* Sources */,
+				4A8CEB5D1CD14DA00F6F31FBD697171F /* Frameworks */,
+				03924A041BFEBEDC148006D839846908 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E54F8F1B7773B02AF170262AC46E650B /* PBXTargetDependency */,
+				A2AD65792EA458CB9F11844F5A6B2707 /* PBXTargetDependency */,
+				6BCB9B5D2D8AB9A6B224B4E473F49720 /* PBXTargetDependency */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swift";
+			productName = Pods_go_sdk_demo_app_ios_swift;
+			productReference = 292D945BA3B0E40B34B4B6C83323FF24 /* Pods-go-sdk-demo-app-ios-swift */;
+			productType = "com.apple.product-type.framework";
+		};
+		A073496AA5B8251A8214AC449F38FD89 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC9C88DFC90D856EB435179E4A31DC7C /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests" */;
+			buildPhases = (
+				40F26F13B90084D63D764614C578E27D /* Headers */,
+				4286ECE6FADD6AD17DBD31A5F176EE7E /* Sources */,
+				4FB7616B72CBB9A89716DD80D23BF19F /* Frameworks */,
+				0E0F9D9C591151143544E3CCEA9C3FC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				61D8C7E5E45855869E8041C55292A262 /* PBXTargetDependency */,
+				585C9E9AE0BB3A9BBF7EF95BDA417554 /* PBXTargetDependency */,
+				8B8FED21391548DCD39E1DA8155A30E0 /* PBXTargetDependency */,
+			);
+			name = "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests";
+			productName = Pods_go_sdk_demo_app_ios_swift_go_sdk_demo_app_ios_swiftUITests;
+			productReference = 739F11BA9C31B76FCF733D419B1DEF9E /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */;
+			productType = "com.apple.product-type.framework";
+		};
+		DB2B17EEE15C8E869A37C1514F4D378E /* Base64 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A667531B11FC05FDE21E71B8E6A1D906 /* Build configuration list for PBXNativeTarget "Base64" */;
+			buildPhases = (
+				1515E461172873D741E019E6C50EAE74 /* Headers */,
+				05242DB8D25EA0992F431420A9609141 /* Sources */,
+				9FE3A9725FE44190F628315E42606DF0 /* Frameworks */,
+				BB189E495155BB15EB0E8B2F94A11CCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Base64;
+			productName = Base64;
+			productReference = E08C779E50631C7CF499C9D92CBF2143 /* Base64 */;
+			productType = "com.apple.product-type.framework";
+		};
+		F95BD6B7EBE4B40A06D0F914262CA972 /* JWT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB2880340EE81E06B93BF60BB78D1A01 /* Build configuration list for PBXNativeTarget "JWT" */;
+			buildPhases = (
+				C65B29D9E7AD2BA00F1DBD0E0AB0BC82 /* Headers */,
+				9EFBD0443059F345A814F54E57BADD5D /* Sources */,
+				B2DB8B0064E5A0441F0BC723C062375D /* Frameworks */,
+				BF45C25CEA3FD92AE012C4AB61412240 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEB4145EAE2DF02D6CA605EC8786FD42 /* PBXTargetDependency */,
+			);
+			name = JWT;
+			productName = JWT;
+			productReference = 2DF82EE18981E98BA2339ECE2AB5F350 /* JWT */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1300;
+				LastUpgradeCheck = 1300;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 297DF4B1454DEE4A9052A4EB31F837B7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DB2B17EEE15C8E869A37C1514F4D378E /* Base64 */,
+				F95BD6B7EBE4B40A06D0F914262CA972 /* JWT */,
+				6CDDAEAF208BA18CE0D801EEBEBA9B75 /* Pods-go-sdk-demo-app-ios-swift */,
+				A073496AA5B8251A8214AC449F38FD89 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests */,
+				502FBB071073968963D57B21476786A5 /* Pods-go-sdk-demo-app-ios-swiftTests */,
+				10CEED9C918901B6EEEE691C76624020 /* SealdSdk */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		038B99A653A11665935C24E0604F578C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03924A041BFEBEDC148006D839846908 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0E0F9D9C591151143544E3CCEA9C3FC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		93C5B25DE5CFA6F6805186F1FD384C25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB189E495155BB15EB0E8B2F94A11CCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF45C25CEA3FD92AE012C4AB61412240 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		333C5697A57254B3348F5756F003CCB2 /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/SealdSdk/SealdSdk-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/SealdSdk/SealdSdk-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/SealdSdk/SealdSdk-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		05242DB8D25EA0992F431420A9609141 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9CF600C1CDD348E9FCF26E9B23DCC218 /* Base64-dummy.m in Sources */,
+				564A05270EDDE6BE9D465D02D97E8052 /* MF_Base64Additions.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4286ECE6FADD6AD17DBD31A5F176EE7E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D44194FF1F788CD94FC97A9FE92B66C /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4794EE1B4FCDDFBCC3B93CCD31AE7553 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C479746E189E44DAE20FFD05A39D774 /* Pods-go-sdk-demo-app-ios-swiftTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C5AD2634679BCCB320C943C65B0ADCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F3331FD2FB3D7A092B1F826CA73F149 /* Pods-go-sdk-demo-app-ios-swift-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CD6E8627403DE36A0C62E5EAE88972F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B51E0DCECAF6945E788C61EBC04999FC /* SealdSdk.m in Sources */,
+				1FF4B70B2D872943204DAD77864DDF44 /* SealdSdk-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9EFBD0443059F345A814F54E57BADD5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				185B03A9A187493F9F884495EBF34B4A /* JWT-dummy.m in Sources */,
+				D88C1488B613A6998586FBA996F0EF3D /* JWTAlgorithmDataHolder.m in Sources */,
+				FD1D899A33201823678E85CF7F90CD5B /* JWTAlgorithmDataHolderChain.m in Sources */,
+				DA704CB375D600F4491D7DFB040486F6 /* JWTAlgorithmESBase.m in Sources */,
+				01108C2D345FE2CA9A98ADF30CC20C15 /* JWTAlgorithmFactory.m in Sources */,
+				276497F5208C96BCBBB9FED72F68CF87 /* JWTAlgorithmHSBase.m in Sources */,
+				0AE52C38490CCD3163BC96A291B190E8 /* JWTAlgorithmNone.m in Sources */,
+				44D3CF722A6994F3F73FE6F60981E498 /* JWTAlgorithmRSBase.m in Sources */,
+				2C9D84FB3852831A644B4D277143F451 /* JWTBase64Coder.m in Sources */,
+				C0A51571A76BF97AD77D7EB90E087BD3 /* JWTClaim.m in Sources */,
+				DDA7008A40AB3DBCB2C5B9CC5B5012A3 /* JWTClaimsSet.m in Sources */,
+				20A42A1FE27F88051DC0D220CC729548 /* JWTClaimsSetSerializer.m in Sources */,
+				742DF648A6F9A4447C50BDF097115DB0 /* JWTClaimsSetVerifier.m in Sources */,
+				2956FC0641B83016AF38BE7DD5DA217C /* JWTCoding.m in Sources */,
+				A9EA5A3F526865B32835736D6EFDC389 /* JWTCoding+ResultTypes.m in Sources */,
+				2974B9BE89470BDC3568DA9C4FECD06A /* JWTCoding+VersionOne.m in Sources */,
+				645FF0F6490C368E185B10E21F60F37B /* JWTCoding+VersionThree.m in Sources */,
+				6BE6AC12983C978A865B27E35F35E3AC /* JWTCoding+VersionTwo.m in Sources */,
+				921CFB44F23FCBF1F764D5725A085E3B /* JWTCryptoKey.m in Sources */,
+				14B06F8993B83AB75CAC815CEBE28BD9 /* JWTCryptoKeyExtractor.m in Sources */,
+				810707C9FA79773E8D645F82D95E6481 /* JWTCryptoSecurity.m in Sources */,
+				671D90A1F695D27EDE89872D32610CD0 /* JWTErrorDescription.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		259BA3661A6DBFD738E1C900337388E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-go-sdk-demo-app-ios-swift";
+			target = 6CDDAEAF208BA18CE0D801EEBEBA9B75 /* Pods-go-sdk-demo-app-ios-swift */;
+			targetProxy = DA385C667BA0E9527E1005CE28D1AF68 /* PBXContainerItemProxy */;
+		};
+		585C9E9AE0BB3A9BBF7EF95BDA417554 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JWT;
+			target = F95BD6B7EBE4B40A06D0F914262CA972 /* JWT */;
+			targetProxy = 8FCEA83D83D05237DDAA06136AD0C83E /* PBXContainerItemProxy */;
+		};
+		61D8C7E5E45855869E8041C55292A262 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Base64;
+			target = DB2B17EEE15C8E869A37C1514F4D378E /* Base64 */;
+			targetProxy = F6FDE713AC2B8F31C35345F7FFAE5164 /* PBXContainerItemProxy */;
+		};
+		6BCB9B5D2D8AB9A6B224B4E473F49720 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SealdSdk;
+			target = 10CEED9C918901B6EEEE691C76624020 /* SealdSdk */;
+			targetProxy = 0EF749EC50B187B07B2419AA5135BD3B /* PBXContainerItemProxy */;
+		};
+		8B8FED21391548DCD39E1DA8155A30E0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SealdSdk;
+			target = 10CEED9C918901B6EEEE691C76624020 /* SealdSdk */;
+			targetProxy = D692ABCEC1A191789B3E7863A373A08E /* PBXContainerItemProxy */;
+		};
+		A2AD65792EA458CB9F11844F5A6B2707 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JWT;
+			target = F95BD6B7EBE4B40A06D0F914262CA972 /* JWT */;
+			targetProxy = CBFEF80A9D4492E7824B5902D69E386A /* PBXContainerItemProxy */;
+		};
+		CEB4145EAE2DF02D6CA605EC8786FD42 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Base64;
+			target = DB2B17EEE15C8E869A37C1514F4D378E /* Base64 */;
+			targetProxy = 0409708C4B31F619CD3209F5128418DE /* PBXContainerItemProxy */;
+		};
+		E54F8F1B7773B02AF170262AC46E650B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Base64;
+			target = DB2B17EEE15C8E869A37C1514F4D378E /* Base64 */;
+			targetProxy = D17E309F8768FEFCFD3C252C9FF9C1F7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4214E6946993DF02ED98D89047C64016 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		5558973177F91CC44E4DDAD92EE33467 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7D09FC0A4CDCD82960421CA9646297F /* JWT.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JWT/JWT-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JWT/JWT-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/JWT/JWT.modulemap";
+				PRODUCT_MODULE_NAME = JWT;
+				PRODUCT_NAME = JWT;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5FBE52C5E76EAF36A37EEF2A8C1CF428 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8102E13E8C22221C689D0F55A7A61A2E /* SealdSdk.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SealdSdk/SealdSdk-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SealdSdk/SealdSdk-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SealdSdk/SealdSdk.modulemap";
+				PRODUCT_MODULE_NAME = SealdSdk;
+				PRODUCT_NAME = SealdSdk;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		67F827A031D557A4EE4EC01C3286A431 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8F8729CA87E1022936921760B47ADC1 /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		6B3851F801FAE45A41A3C4735D74EFB4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1146F9DCA8DEF25FD55CF3631EA0E88A /* Base64.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Base64/Base64-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Base64/Base64-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Base64/Base64.modulemap";
+				PRODUCT_MODULE_NAME = Base64;
+				PRODUCT_NAME = Base64;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6CDB2D378E1AE92D3170ED1424E54213 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 27C4FE8BAF71DACA388F3542AB735104 /* JWT.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/JWT/JWT-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/JWT/JWT-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/JWT/JWT.modulemap";
+				PRODUCT_MODULE_NAME = JWT;
+				PRODUCT_NAME = JWT;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		70D6DA2E2CFABEDC9D91998CB5D51D42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC5D02F55AA80D26671B2573AF67ACDD /* Pods-go-sdk-demo-app-ios-swiftTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swiftTests/Pods-go-sdk-demo-app-ios-swiftTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swiftTests/Pods-go-sdk-demo-app-ios-swiftTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		943007A5702F3A887CF56F0E2D607187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2CE6F06D4227DCE4B1D8BDE8A2AEC1FA /* SealdSdk.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SealdSdk/SealdSdk-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SealdSdk/SealdSdk-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SealdSdk/SealdSdk.modulemap";
+				PRODUCT_MODULE_NAME = SealdSdk;
+				PRODUCT_NAME = SealdSdk;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		ADF41E2D718A7354D6519CDAFF10FD30 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C74058C1AF1407DD5CF8BBF1247A3AD /* Pods-go-sdk-demo-app-ios-swift.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift/Pods-go-sdk-demo-app-ios-swift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift/Pods-go-sdk-demo-app-ios-swift.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B8840659305D3D44848A4EC682EC64AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 49BE83F217E0074DCFC04E22DACFEAA9 /* Pods-go-sdk-demo-app-ios-swiftTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swiftTests/Pods-go-sdk-demo-app-ios-swiftTests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swiftTests/Pods-go-sdk-demo-app-ios-swiftTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		CA174B823314A48E9DB10172E394F4D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19ECD5A4D30AAA17DC716ED005A99C9A /* Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests/Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		CD85FD90473CFBE797E4264E7BBC70AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		CEB5B455D84305AAD7189573E3F53401 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0BB920C375D6D1871DAA367866F0B197 /* Base64.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Base64/Base64-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Base64/Base64-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Base64/Base64.modulemap";
+				PRODUCT_MODULE_NAME = Base64;
+				PRODUCT_NAME = Base64;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		FE374990F7DF8CD39D2DC8C307B75A03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1CEA2B76183D0F72B54158A9BC20D4C4 /* Pods-go-sdk-demo-app-ios-swift.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift/Pods-go-sdk-demo-app-ios-swift-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-go-sdk-demo-app-ios-swift/Pods-go-sdk-demo-app-ios-swift.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4214E6946993DF02ED98D89047C64016 /* Debug */,
+				CD85FD90473CFBE797E4264E7BBC70AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		487C4DCB18B47828D0813E7B8C0FDA4D /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8840659305D3D44848A4EC682EC64AC /* Debug */,
+				70D6DA2E2CFABEDC9D91998CB5D51D42 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A653A30F5BF39D2CCB224B3D0668E983 /* Build configuration list for PBXNativeTarget "SealdSdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FBE52C5E76EAF36A37EEF2A8C1CF428 /* Debug */,
+				943007A5702F3A887CF56F0E2D607187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A667531B11FC05FDE21E71B8E6A1D906 /* Build configuration list for PBXNativeTarget "Base64" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEB5B455D84305AAD7189573E3F53401 /* Debug */,
+				6B3851F801FAE45A41A3C4735D74EFB4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AAB7502EA9CB78B582B9759B4C0FD799 /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FE374990F7DF8CD39D2DC8C307B75A03 /* Debug */,
+				ADF41E2D718A7354D6519CDAFF10FD30 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB2880340EE81E06B93BF60BB78D1A01 /* Build configuration list for PBXNativeTarget "JWT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5558973177F91CC44E4DDAD92EE33467 /* Debug */,
+				6CDB2D378E1AE92D3170ED1424E54213 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC9C88DFC90D856EB435179E4A31DC7C /* Build configuration list for PBXNativeTarget "Pods-go-sdk-demo-app-ios-swift-go-sdk-demo-app-ios-swiftUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67F827A031D557A4EE4EC01C3286A431 /* Debug */,
+				CA174B823314A48E9DB10172E394F4D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}
