@@ -1,13 +1,14 @@
 //
-//  go_sdk_demo_app_ios_swiftUITestsLaunchTests.swift
-//  go-sdk-demo-app-ios-swiftUITests
+//  sealdSDKDemoAppIosSwiftUITestsLaunchTests.swift
+//  seald-sdk-demo-app-ios-swiftUITests
 //
 //  Created by Mehdi Kouhen on 28/02/2023.
 //
 
 import XCTest
 
-class go_sdk_demo_app_ios_swiftUITestsLaunchTests: XCTestCase {
+// swiftlint:disable:next type_name
+class SealdSDKDemoAppIosSwiftUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

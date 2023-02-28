@@ -1,13 +1,13 @@
 //
-//  go_sdk_demo_app_ios_swiftUITests.swift
-//  go-sdk-demo-app-ios-swiftUITests
+//  sealdSDKDemoAppIosSwiftUITests.swift
+//  seald-sdk-demo-app-ios-swiftUITests
 //
 //  Created by Mehdi Kouhen on 28/02/2023.
 //
 
 import XCTest
 
-class go_sdk_demo_app_ios_swiftUITests: XCTestCase {
+class SealdSDKDemoAppIosSwiftUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -15,7 +15,8 @@ class go_sdk_demo_app_ios_swiftUITests: XCTestCase {
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
 
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        // In UI tests it’s important to set the initial state - such as interface orientation - required for your
+        // tests before they run. The setUp method is a good place to do this.
     }
 
     override func tearDownWithError() throws {
