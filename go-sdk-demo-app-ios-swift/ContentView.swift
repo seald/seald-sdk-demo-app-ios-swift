@@ -64,48 +64,180 @@ func runTests() {
     
     // Create group: https://docs.seald.io/sdk/guides/5-groups.html
     let groupName = "group-1"
-    let groupMembers = [user1AccountInfo.userId!]
-    let groupAdmins = [user1AccountInfo.userId!]
+    let groupMembers = [user1AccountInfo.userId]
+    let groupAdmins = [user1AccountInfo.userId]
     let groupId = try! sdk1.createGroup(groupName, members: groupMembers, admins: groupAdmins)
     
-    let error: NSErrorPointer
     // Manage group members and admins
-    sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user2AccountInfo.userId!], adminsToSet: [], error: error) // Add user2 as group member
-    assert(error == nil)
-    sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId!], adminsToSet: [user3AccountInfo.userId!], error: error) // user1 add user3 as group member and group admin
-    assert(error == nil)
-    sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user2AccountInfo.userId!], error: error) // user3 can remove user2
-    assert(error == nil)
-    sdk3.setGroupAdminsWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId!], error: error) // user3 can remove user1 from admins
-    assert(error == nil)
-
+    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user2AccountInfo.userId], adminsToSet: []) // Add user2 as group member
+    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId], adminsToSet: [user3AccountInfo.userId]) // user1 add user3 as group member and group admin
+    try! sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user2AccountInfo.userId]) // user3 can remove user2
+    try! sdk3.setGroupAdminsWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId]) // user3 can remove user1 from admins
     
     // Create encryption session: https://docs.seald.io/sdk/guides/6-encryption-sessions.html
-    let recipient = [user1AccountInfo.userId!, user2AccountInfo.userId!, groupId]
+    let recipient = [user1AccountInfo.userId, user2AccountInfo.userId, groupId]
     let es1SDK1 = try! sdk1.createEncryptionSession(withRecipients: recipient, useCache: true) // user1, user2, and group as recipients
 
-    // The io.seald.seald_sdk.EncryptionSession object can encrypt and decrypt for user1
+    // The SealdEncryptionSession object can encrypt and decrypt for user1
     let initialString = "a message that needs to be encrypted!"
     let encryptedMessage = try! es1SDK1.encryptMessage(initialString)
     let decryptedMessage = try! es1SDK1.decryptMessage(encryptedMessage)
     assert(initialString == decryptedMessage)
 
+    // user1 can retrieve the EncryptionSession from the encrypted message
+    let es1SDK1RetrieveFromMess = try! sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: true)
+    let decryptedMessageFromMess = try! es1SDK1RetrieveFromMess.decryptMessage(encryptedMessage)
+    assert(initialString == decryptedMessageFromMess)
 
+    // user2 and user3 can retrieve the encryptionSession (from the encrypted message or the session ID).
+    let es1SDK2 = try! sdk2.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: true)
+    let decryptedMessageSDK2 = try! es1SDK2.decryptMessage(encryptedMessage)
+    assert(initialString == decryptedMessageSDK2)
 
-    /*
-    let members = [userId]
-    let groupId = try? seald.createGroup("amzingGroupName", members: members, admins: members) // TODO: try!
-    print("groupId \(groupId)")
+    let es1SDK3FromGroup = try! sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: true)
+    let decryptedMessageSDK3 = try! es1SDK3FromGroup.decryptMessage(encryptedMessage)
+    assert(initialString == decryptedMessageSDK3)
 
-    let es1SDK1 = try! seald.createEncryptionSession(members, useCache: true)
+    // user3 removes all members of "group-1". A group without member is deleted.
+    try! sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user1AccountInfo.userId, user3AccountInfo.userId])
 
-    let encryptedMessage = try! es1SDK1.encryptMessage("coucou")
-    print("encryptedMessage \(encryptedMessage)")
+    // user3 could retrieve the previous encryption session only because "group-1" was set as recipient.
+    // As the group was deleted, it can no longer access it.
+    // user3 still has the encryption session in its cache, but we can disable it.
+    var hasThrown = false
+    if let _ = try? sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
+        hasThrown = false
+    } else {
+        hasThrown = true
+    }
+    assert(hasThrown == true)
 
-    let decryptedMessage = try! es1SDK1.decryptMessage(encryptedMessage)
-    print("decryptedMessage \(decryptedMessage)")
-    */
-    print("SDK DEMO END")
+    // user2 adds user3 as recipient of the encryption session.
+    try! es1SDK2.addRecipients([user3AccountInfo.userId])
+
+    // user3 can now retrieve it.
+    let es1SDK3 = try! sdk3.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: false)
+    let decryptedMessageAfterAdd = try! es1SDK3.decryptMessage(encryptedMessage)
+    assert(initialString == decryptedMessageAfterAdd)
+
+    // user2 revokes user3 from the encryption session.
+    try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
+    
+    // user3 cannot retrieve the session anymore
+    if let _ = try? sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
+        hasThrown = false
+    } else {
+        hasThrown = true
+    }
+    assert(hasThrown == true)
+
+    // user1 revokes all other recipients from the session
+    try! es1SDK1.revokeOthers()
+
+    // user2 cannot retrieve the session anymore
+    if let _ = try? sdk2.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
+        hasThrown = false
+    } else {
+        hasThrown = true
+    }
+    assert(hasThrown == true)
+
+    // user1 revokes all. It can no longer retrieve it.
+    try! es1SDK1.revokeAll()
+    if let _ = try? sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
+        hasThrown = false
+    } else {
+        hasThrown = true
+    }
+    assert(hasThrown == true)
+    
+    // Create additional data for user1
+    let es2SDK1 = try! sdk1.createEncryptionSession(withRecipients: [user1AccountInfo.userId], useCache: true)
+    let anotherMessage = "nobody should read that!"
+    let secondEncryptedMessage = try! es2SDK1.encryptMessage(anotherMessage)
+
+    // user1 can renew its key, and still decrypt old messages
+    try! sdk1.renewKeysWithExpire(after: TimeInterval( 5 * 365 * 24 * 60 * 60))
+    let es2SDK1AfterRenew = try! sdk1.retrieveEncryptionSession(withSessionId: es2SDK1.sessionId, useCache: false)
+    let decryptedMessageAfterRenew = try! es2SDK1AfterRenew.decryptMessage(secondEncryptedMessage)
+    assert(anotherMessage == decryptedMessageAfterRenew)
+
+    // CONNECTORS https://docs.seald.io/en/sdk/guides/jwt.html#adding-a-userid
+
+    // we can add a custom userId using a JWT
+    let customConnectorJWTValue = "user1-custom-id"
+    let addConnectorJWT = jwtBuilder.connectorJWT(customUserId: customConnectorJWTValue, appId: appId)
+    try! sdk1.pushJWT(addConnectorJWT)
+
+    let connectors = try! sdk1.listConnectors()
+    assert(connectors.count == 1)
+    assert(connectors[0].state == "VO")
+    assert(connectors[0].type == "AP")
+    assert(connectors[0].sealdId == user1AccountInfo.userId)
+    assert(connectors[0].value == "\(customConnectorJWTValue)@\(appId)")
+
+    // Retrieve connector by its id
+    let retrieveConnector = try! sdk1.retrieveConnector(connectors[0].connectorId)
+    assert(retrieveConnector.sealdId == user1AccountInfo.userId)
+    assert(retrieveConnector.state == "VO")
+    assert(retrieveConnector.type == "AP")
+    assert(retrieveConnector.value == "\(customConnectorJWTValue)@\(appId)")
+
+    // Retrieve connectors from a user id.
+    let connectorsFromSealdId = try! sdk1.getConnectorsFromSealdId(user1AccountInfo.userId)
+    assert(connectorsFromSealdId.count == 1)
+    assert(connectorsFromSealdId[0].state == "VO")
+    assert(connectorsFromSealdId[0].type == "AP")
+    assert(connectorsFromSealdId[0].sealdId == user1AccountInfo.userId)
+    assert(connectorsFromSealdId[0].value == "\(customConnectorJWTValue)@\(appId)")
+
+    // Get sealdId of a user from a connector
+    let sealdIds = try! sdk2.getSealdIds(fromConnectors: [SealdConnectorTypeValue(type: "AP", value: "\(customConnectorJWTValue)@\(appId)")])
+    assert(sealdIds.count == 1)
+    assert(sealdIds[0] == user1AccountInfo.userId)
+
+    // user1 can remove a connector
+    try! sdk1.removeConnector(connectors[0].connectorId)
+
+    // verify that only one connector left
+    let connectorListAfterRevoke = try! sdk1.listConnectors()
+    assert(connectorListAfterRevoke.count == 0)
+
+    // user1 can export its identity
+    let exportIdentity = try! sdk1.exportIdentity()
+
+    // We can instantiate a new SealdSDK, import the exported identity
+    let sdk1Exported = try! SealdSdk(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk1Exported", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1Exported", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
+    try! sdk1Exported.importIdentity(exportIdentity)
+
+    // SDK with imported identity can decrypt
+    let es2SDK1Exported = try! sdk1Exported.retrieveEncryptionSession(fromMessage: secondEncryptedMessage, useCache: true)
+    let clearMessageExportedIdentity = try! es2SDK1Exported.decryptMessage(secondEncryptedMessage)
+    assert(anotherMessage == clearMessageExportedIdentity)
+
+    // user1 can create sub identity
+    let subIdentity = try! sdk1.createSubIdentity(withDeviceName: "SUB-deviceName", expireAfter: TimeInterval( 5 * 365 * 24 * 60 * 60))
+    print("subIdentity \(String(describing: subIdentity.deviceId))")
+    print("subIdentity \(subIdentity)")
+    assert(subIdentity.deviceId != "")
+
+    // first device needs to reencrypt for the new device
+    try! sdk1.massReencrypt(withDeviceId: subIdentity.deviceId, options: SealdMassReencryptOptions())
+    // We can instantiate a new SealdSDK, import the sub-device identity
+    let sdk1SubDevice = try! SealdSdk(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk1SubDevice", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1SubDevice", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
+    try! sdk1SubDevice.importIdentity(subIdentity.backupKey)
+
+    // sub device can decrypt
+    let es2SDK1SubDevice = try! sdk1SubDevice.retrieveEncryptionSession(fromMessage: secondEncryptedMessage, useCache: false)
+    let clearMessageSubdIdentity = try! es2SDK1SubDevice.decryptMessage(secondEncryptedMessage)
+    assert(anotherMessage == clearMessageSubdIdentity)
+
+    try! sdk1.heartbeat()
+
+    // close SDKs
+    try! sdk1.close()
+    try! sdk2.close()
+    try! sdk3.close()
 }
 
 struct ContentView: View {

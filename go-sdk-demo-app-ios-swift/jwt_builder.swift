@@ -55,7 +55,7 @@ class JWTBuilder {
                        "iat" : NSNumber(value: now.timeIntervalSince1970),
                        "exp" : NSNumber(value: exp.timeIntervalSince1970),
                        "connector_add": ["type": "AP", "value": "\(customUserId)@\(appId)"],
-                       "scopes":JWTPermission.addConnector] as [String : Any]
+                       "scopes":JWTPermission.addConnector.rawValue] as [String : Any]
         let token = JWT.encodePayload(payload, withSecret: JWTSharedSecret, withHeaders: headers, algorithm: JWTAlgorithm)
         return token!
     }

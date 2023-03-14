@@ -1,12 +1,11 @@
-# Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '13.0'
 
 target 'go-sdk-demo-app-ios-swift' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
   # Pods for go-sdk-demo-app-ios-swift
-  pod 'SealdSdk', '0.1.0-beta.49387'
+  pod 'SealdSdk', '0.1.0-beta.49527'
   pod 'JWT', '3.0.0-beta.3'
   pod 'Base64'
 
