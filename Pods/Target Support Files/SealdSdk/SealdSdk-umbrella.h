@@ -10,6 +10,8 @@
 #endif
 #endif
 
+#import "Helpers.h"
+#import "SealdEncryptionSession.h"
 #import "SealdSdk.h"
 
 FOUNDATION_EXPORT double SealdSdkVersionNumber;

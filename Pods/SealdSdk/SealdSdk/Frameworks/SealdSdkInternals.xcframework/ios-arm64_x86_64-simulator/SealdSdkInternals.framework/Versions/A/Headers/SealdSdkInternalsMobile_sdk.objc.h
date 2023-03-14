@@ -21,7 +21,11 @@
 @class SealdSdkInternalsMobile_sdkCreateAccountOptions;
 @class SealdSdkInternalsMobile_sdkCreateSubIdentityOptions;
 @class SealdSdkInternalsMobile_sdkCreateSubIdentityResponse;
+@class SealdSdkInternalsMobile_sdkDeviceMissingKeys;
+@class SealdSdkInternalsMobile_sdkDevicesMissingKeysArray;
 @class SealdSdkInternalsMobile_sdkInitializeOptions;
+@class SealdSdkInternalsMobile_sdkMassReencryptOptions;
+@class SealdSdkInternalsMobile_sdkMassReencryptResponse;
 @class SealdSdkInternalsMobile_sdkMobileEncryptionSession;
 @class SealdSdkInternalsMobile_sdkMobileSDK;
 @class SealdSdkInternalsMobile_sdkPreValidationToken;
@@ -134,6 +138,26 @@
 @property (nonatomic) NSData* _Nullable backupKey;
 @end
 
+@interface SealdSdkInternalsMobile_sdkDeviceMissingKeys : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) NSString* _Nonnull deviceId;
+@property (nonatomic) long count;
+@end
+
+@interface SealdSdkInternalsMobile_sdkDevicesMissingKeysArray : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+- (SealdSdkInternalsMobile_sdkDeviceMissingKeys* _Nullable)get:(long)i;
+- (long)size;
+@end
+
 @interface SealdSdkInternalsMobile_sdkInitializeOptions : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
@@ -146,8 +170,39 @@
 @property (nonatomic) NSString* _Nonnull dbPath;
 @property (nonatomic) int64_t encryptionSessionCacheTTL;
 @property (nonatomic) int8_t logLevel;
+@property (nonatomic) BOOL logNoColor;
 @property (nonatomic) NSString* _Nonnull instanceName;
 @property (nonatomic) NSString* _Nonnull databaseEncryptionKeyB64;
+@end
+
+/**
+ * Reencrypt
+ */
+@interface SealdSdkInternalsMobile_sdkMassReencryptOptions : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) long retries;
+@property (nonatomic) long retrieveBatchSize;
+@property (nonatomic) int64_t waitBetweenRetries;
+@property (nonatomic) BOOL waitProvisioning;
+@property (nonatomic) int64_t waitProvisioningTime;
+@property (nonatomic) int64_t waitProvisioningTimeMax;
+@property (nonatomic) int64_t waitProvisioningTimeStep;
+@property (nonatomic) long waitProvisioningRetries;
+@property (nonatomic) BOOL forceLocalAccountUpdate;
+@end
+
+@interface SealdSdkInternalsMobile_sdkMassReencryptResponse : NSObject <goSeqRefInterface> {
+}
+@property(strong, readonly) _Nonnull id _ref;
+
+- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+- (nonnull instancetype)init;
+@property (nonatomic) long reencrypted;
+@property (nonatomic) long failed;
 @end
 
 @interface SealdSdkInternalsMobile_sdkMobileEncryptionSession : NSObject <goSeqRefInterface> {
@@ -175,21 +230,25 @@
 - (nonnull instancetype)init;
 - (SealdSdkInternalsMobile_sdkConnector* _Nullable)addConnector:(NSString* _Nullable)value connectorType:(NSString* _Nullable)connectorType preValidationToken:(SealdSdkInternalsMobile_sdkPreValidationToken* _Nullable)preValidationToken error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)addGroupMembers:(NSString* _Nullable)groupId membersToAdd:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)membersToAdd adminsToSet:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)adminsToSet error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)close:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkAccountInfo* _Nullable)createAccount:(SealdSdkInternalsMobile_sdkCreateAccountOptions* _Nullable)options error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)createEncryptionSession:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)recipients useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
 - (NSString* _Nonnull)createGroup:(NSString* _Nullable)groupName members:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)members admins:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)admins error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkCreateSubIdentityResponse* _Nullable)createSubIdentity:(SealdSdkInternalsMobile_sdkCreateSubIdentityOptions* _Nullable)options error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkDevicesMissingKeysArray* _Nullable)devicesMissingKeys:(BOOL)forceLocalAccountUpdate error:(NSError* _Nullable* _Nullable)error;
 - (NSData* _Nullable)exportIdentity:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkConnectorsArray* _Nullable)getConnectorsFromSealdId:(NSString* _Nullable)sealdId error:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkAccountInfo* _Nullable)getCurrentAccountInfo;
 - (SealdSdkInternalsMobile_sdkStringArray* _Nullable)getSealdIdsFromConnectors:(SealdSdkInternalsMobile_sdkConnectorTypeValueArray* _Nullable)connectorTypeValues error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)heartbeat:(NSError* _Nullable* _Nullable)error;
 - (BOOL)importIdentity:(NSData* _Nullable)identity error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkConnectorsArray* _Nullable)listConnectors:(NSError* _Nullable* _Nullable)error;
+- (SealdSdkInternalsMobile_sdkMassReencryptResponse* _Nullable)massReencrypt:(NSString* _Nullable)deviceId options:(SealdSdkInternalsMobile_sdkMassReencryptOptions* _Nullable)options error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)pushJWT:(NSString* _Nullable)jwt error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkConnector* _Nullable)removeConnector:(NSString* _Nullable)connectorId error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)removeGroupMembers:(NSString* _Nullable)groupId membersToRemove:(SealdSdkInternalsMobile_sdkStringArray* _Nullable)membersToRemove error:(NSError* _Nullable* _Nullable)error;
 - (BOOL)renewGroupKey:(NSString* _Nullable)groupId error:(NSError* _Nullable* _Nullable)error;
-- (BOOL)renewKeys:(long)keyExpireAfter error:(NSError* _Nullable* _Nullable)error;
+- (BOOL)renewKeys:(int64_t)keyExpireAfter error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkConnector* _Nullable)retrieveConnector:(NSString* _Nullable)connectorId error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSession:(NSString* _Nullable)messageId useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
 - (SealdSdkInternalsMobile_sdkMobileEncryptionSession* _Nullable)retrieveEncryptionSessionFromMessage:(NSString* _Nullable)message useCache:(BOOL)useCache error:(NSError* _Nullable* _Nullable)error;
