@@ -10,7 +10,6 @@ import SealdSdk
 import JWT
 
 func runTests() {
-    print("SDK DEMO START")
     // Seald account infos:
     // First step with Seald: https://docs.seald.io/en/sdk/guides/1-quick-start.html
     // Create a team here: https://www.seald.io/create-sdk
