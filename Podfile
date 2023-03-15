@@ -1,6 +1,6 @@
 platform :ios, '13.0'
 
-target 'go-sdk-demo-app-ios-swift' do
+target 'SealdSDK demo app ios swift' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
@@ -9,12 +9,12 @@ target 'go-sdk-demo-app-ios-swift' do
   pod 'JWT', '3.0.0-beta.3'
   pod 'Base64'
 
-  target 'go-sdk-demo-app-ios-swiftTests' do
+  target 'SealdSDK demo app ios swiftTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'go-sdk-demo-app-ios-swiftUITests' do
+  target 'SealdSDK demo app ios swiftUITests' do
     # Pods for testing
   end
 

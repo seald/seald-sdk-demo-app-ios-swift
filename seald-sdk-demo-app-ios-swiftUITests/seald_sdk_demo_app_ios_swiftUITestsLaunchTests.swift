@@ -1,13 +1,13 @@
 //
-//  go_sdk_demo_app_ios_swiftUITestsLaunchTests.swift
-//  go-sdk-demo-app-ios-swiftUITests
+//  seald_sdk_demo_app_ios_swiftUITestsLaunchTests.swift
+//  seald-sdk-demo-app-ios-swiftUITests
 //
 //  Created by Mehdi Kouhen on 28/02/2023.
 //
 
 import XCTest
 
-class go_sdk_demo_app_ios_swiftUITestsLaunchTests: XCTestCase {
+class seald_sdk_demo_app_ios_swiftUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

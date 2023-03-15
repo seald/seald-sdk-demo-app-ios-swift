@@ -1,13 +1,13 @@
 //
-//  go_sdk_demo_app_ios_swiftUITests.swift
-//  go-sdk-demo-app-ios-swiftUITests
+//  seald_sdk_demo_app_ios_swiftUITests.swift
+//  seald-sdk-demo-app-ios-swiftUITests
 //
 //  Created by Mehdi Kouhen on 28/02/2023.
 //
 
 import XCTest
 
-class go_sdk_demo_app_ios_swiftUITests: XCTestCase {
+class seald_sdk_demo_app_ios_swiftUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

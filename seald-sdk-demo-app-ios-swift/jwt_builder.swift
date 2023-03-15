@@ -1,6 +1,6 @@
 //
 //  jwt_builder.swift
-//  go-sdk-demo-app-ios-swift
+//  seald-sdk-demo-app-ios-swift
 //
 //  Created by Clement on 13/03/2023.
 //  Copyright © 2023 Seald SAS. All rights reserved.
