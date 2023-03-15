@@ -1,6 +1,0 @@
-framework module SealdSdk {
-  umbrella header "SealdSdk-umbrella.h"
-
-  export *
-  module * { export * }
-}
