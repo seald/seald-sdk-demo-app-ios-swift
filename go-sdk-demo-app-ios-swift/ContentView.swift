@@ -3,6 +3,7 @@
 //  go-sdk-demo-app-ios-swift
 //
 //  Created by Mehdi Kouhen on 28/02/2023.
+//  Copyright © 2023 Seald SAS. All rights reserved.
 //
 
 import SwiftUI
@@ -69,13 +70,13 @@ func runTests() {
     
     // Manage group members and admins
     try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user2AccountInfo.userId], adminsToSet: []) // Add user2 as group member
-    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId], adminsToSet: [user3AccountInfo.userId]) // user1 add user3 as group member and group admin
+    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId], adminsToSet: [user3AccountInfo.userId]) // user1 adds user3 as group member and group admin
     try! sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user2AccountInfo.userId]) // user3 can remove user2
     try! sdk3.setGroupAdminsWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId]) // user3 can remove user1 from admins
     
     // Create encryption session: https://docs.seald.io/sdk/guides/6-encryption-sessions.html
-    let recipient = [user1AccountInfo.userId, user2AccountInfo.userId, groupId]
-    let es1SDK1 = try! sdk1.createEncryptionSession(withRecipients: recipient, useCache: true) // user1, user2, and group as recipients
+    let recipients = [user1AccountInfo.userId, user2AccountInfo.userId, groupId]
+    let es1SDK1 = try! sdk1.createEncryptionSession(withRecipients: recipients, useCache: true) // user1, user2, and group as recipients
 
     // The SealdEncryptionSession object can encrypt and decrypt for user1
     let initialString = "a message that needs to be encrypted!"
@@ -103,13 +104,12 @@ func runTests() {
     // user3 could retrieve the previous encryption session only because "group-1" was set as recipient.
     // As the group was deleted, it can no longer access it.
     // user3 still has the encryption session in its cache, but we can disable it.
-    var hasThrown = false
-    if let _ = try? sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
-        hasThrown = false
-    } else {
-        hasThrown = true
+    do {
+        let _ = try sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("status: 404"))
     }
-    assert(hasThrown == true)
 
     // user2 adds user3 as recipient of the encryption session.
     try! es1SDK2.addRecipients([user3AccountInfo.userId])
@@ -123,32 +123,32 @@ func runTests() {
     try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     
     // user3 cannot retrieve the session anymore
-    if let _ = try? sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
-        hasThrown = false
-    } else {
-        hasThrown = true
+    do {
+        let _ = try sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("status: 404"))
     }
-    assert(hasThrown == true)
 
     // user1 revokes all other recipients from the session
     try! es1SDK1.revokeOthers()
 
     // user2 cannot retrieve the session anymore
-    if let _ = try? sdk2.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
-        hasThrown = false
-    } else {
-        hasThrown = true
+    do {
+        let _ = try sdk2.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("status: 404"))
     }
-    assert(hasThrown == true)
 
     // user1 revokes all. It can no longer retrieve it.
     try! es1SDK1.revokeAll()
-    if let _ = try? sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false) {
-        hasThrown = false
-    } else {
-        hasThrown = true
+    do {
+        let _ = try sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("status: 404"))
     }
-    assert(hasThrown == true)
     
     // Create additional data for user1
     let es2SDK1 = try! sdk1.createEncryptionSession(withRecipients: [user1AccountInfo.userId], useCache: true)
@@ -168,6 +168,7 @@ func runTests() {
     let addConnectorJWT = jwtBuilder.connectorJWT(customUserId: customConnectorJWTValue, appId: appId)
     try! sdk1.pushJWT(addConnectorJWT)
 
+    // we can list a user connectors
     let connectors = try! sdk1.listConnectors()
     assert(connectors.count == 1)
     assert(connectors[0].state == "VO")
@@ -216,8 +217,6 @@ func runTests() {
 
     // user1 can create sub identity
     let subIdentity = try! sdk1.createSubIdentity(withDeviceName: "SUB-deviceName", expireAfter: TimeInterval( 5 * 365 * 24 * 60 * 60))
-    print("subIdentity \(String(describing: subIdentity.deviceId))")
-    print("subIdentity \(subIdentity)")
     assert(subIdentity.deviceId != "")
 
     // first device needs to reencrypt for the new device
@@ -231,6 +230,7 @@ func runTests() {
     let clearMessageSubdIdentity = try! es2SDK1SubDevice.decryptMessage(secondEncryptedMessage)
     assert(anotherMessage == clearMessageSubdIdentity)
 
+    // users can send heartbeat
     try! sdk1.heartbeat()
 
     // close SDKs

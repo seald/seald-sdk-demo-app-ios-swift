@@ -3,6 +3,7 @@
 //  go-sdk-demo-app-ios-swift
 //
 //  Created by Clement on 13/03/2023.
+//  Copyright © 2023 Seald SAS. All rights reserved.
 //
 
 import Foundation
@@ -31,14 +32,11 @@ class JWTBuilder {
 
     func signupJWT() -> String {
         let now = Date()
-        let exp = Calendar.current.date(byAdding: .day, value: 30, to: now)!
-        print("JWTPermission.joinTeam \(JWTPermission.joinTeam.rawValue)")
 
         let headers = ["typ" : "JWT"]
         let payload = ["iss" : JWTSharedSecretId,
                        "jti" : UUID().uuidString,
                        "iat" : NSNumber(value: now.timeIntervalSince1970),
-                       "exp" : NSNumber(value: exp.timeIntervalSince1970),
                        "join_team": true,
                        "scopes":JWTPermission.joinTeam.rawValue] as [String : Any]
         let token = JWT.encodePayload(payload, withSecret: JWTSharedSecret, withHeaders: headers, algorithm: JWTAlgorithm)
@@ -47,13 +45,11 @@ class JWTBuilder {
 
     func connectorJWT(customUserId: String, appId: String) -> String {
         let now = Date()
-        let exp = Calendar.current.date(byAdding: .day, value: 30, to: now)!
 
         let headers = ["typ" : "JWT"]
         let payload = ["iss" : JWTSharedSecretId,
                        "jti" : UUID().uuidString,
                        "iat" : NSNumber(value: now.timeIntervalSince1970),
-                       "exp" : NSNumber(value: exp.timeIntervalSince1970),
                        "connector_add": ["type": "AP", "value": "\(customUserId)@\(appId)"],
                        "scopes":JWTPermission.addConnector.rawValue] as [String : Any]
         let token = JWT.encodePayload(payload, withSecret: JWTSharedSecret, withHeaders: headers, algorithm: JWTAlgorithm)
