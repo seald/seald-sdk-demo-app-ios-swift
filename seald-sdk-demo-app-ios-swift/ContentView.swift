@@ -88,6 +88,28 @@ func runTests() {
     let es1SDK1RetrieveFromMess = try! sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: true)
     let decryptedMessageFromMess = try! es1SDK1RetrieveFromMess.decryptMessage(encryptedMessage)
     assert(initialString == decryptedMessageFromMess)
+    
+    // Create a test file on disk that we will encrypt/decrypt
+    let filename = "testfile.txt"
+    let fileContent = "File clear data."
+    let filePath = "\(sealdDir)/\(filename)"
+    try! fileContent.write(toFile: filePath, atomically: true, encoding: .utf8)
+
+    // Encrypt the test file. Resulting file will be written alongside the source file, with `.seald` extension added
+    let encryptedFileURI = try! es1SDK1.encryptFile(fromURI: filePath)
+    
+    // User1 can retrieve the encryptionSession directly from the encrypted file
+    let es1SDK1FromFile = try! sdk1.retrieveEncryptionSession(fromFile: encryptedFileURI, useCache: true)
+    
+    // The retrieved session can decrypt the file.
+    // The decrypted file will be named with the name it has at encryption. Any renaming of the encrypted file will be ignored.
+    // NOTE: In this example, the original file will be overwritten
+    let decryptedFileURI = try! es1SDK1FromFile.decryptFile(fromURI: encryptedFileURI)
+    assert(decryptedFileURI.hasSuffix(filename))
+    let decryptedFileContent = try! String(contentsOfFile: decryptedFileURI, encoding: .utf8)
+    assert(fileContent == decryptedFileContent)
+
+
 
     // user2 and user3 can retrieve the encryptionSession (from the encrypted message or the session ID).
     let es1SDK2 = try! sdk2.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: true)
