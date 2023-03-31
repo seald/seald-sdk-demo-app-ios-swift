@@ -103,13 +103,10 @@ func runTests() {
     
     // The retrieved session can decrypt the file.
     // The decrypted file will be named with the name it has at encryption. Any renaming of the encrypted file will be ignored.
-    // NOTE: In this example, the original file will be overwritten
     let decryptedFileURI = try! es1SDK1FromFile.decryptFile(fromURI: encryptedFileURI)
-    assert(decryptedFileURI.hasSuffix(filename))
+    assert(decryptedFileURI.hasSuffix("testfile (1).txt"))
     let decryptedFileContent = try! String(contentsOfFile: decryptedFileURI, encoding: .utf8)
     assert(fileContent == decryptedFileContent)
-
-
 
     // user2 and user3 can retrieve the encryptionSession (from the encrypted message or the session ID).
     let es1SDK2 = try! sdk2.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: true)
@@ -133,8 +130,20 @@ func runTests() {
         assert(error.localizedDescription.contains("status: 404"))
     }
 
+    // Revoking someone who is not in the session does not throw, but the status will be "ko"
+    let respRevokeBefore = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
+    assert(respRevokeBefore.count == 1)
+    print("user3AccountInfo.userId \(user3AccountInfo.userId)")
+    print("respRevokeBefore \(respRevokeBefore[0].userId)")
+    print("respRevokeBefore \(respRevokeBefore[0].status)")
+    assert(user3AccountInfo.userId == respRevokeBefore[0].userId)
+    assert("ko" == respRevokeBefore[0].status)
+    
     // user2 adds user3 as recipient of the encryption session.
-    try! es1SDK2.addRecipients([user3AccountInfo.userId])
+    let respAdd = try! es1SDK2.addRecipients([user3AccountInfo.userId])
+    assert(respAdd.count == 1)
+    assert(user3AccountInfo.deviceId == respAdd[0].userId)
+    assert("ok" == respAdd[0].status)
 
     // user3 can now retrieve it.
     let es1SDK3 = try! sdk3.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: false)
@@ -142,7 +151,10 @@ func runTests() {
     assert(initialString == decryptedMessageAfterAdd)
 
     // user2 revokes user3 from the encryption session.
-    try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
+    let respRevoke = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
+    assert(respRevoke.count == 1)
+    assert(user3AccountInfo.userId == respRevoke[0].userId)
+    assert("ok" == respRevoke[0].status)
     
     // user3 cannot retrieve the session anymore
     do {
@@ -153,7 +165,11 @@ func runTests() {
     }
 
     // user1 revokes all other recipients from the session
-    try! es1SDK1.revokeOthers()
+    let respRevokeOther = try! es1SDK1.revokeOthers()
+    assert(respRevokeOther.count == 3) // revoke user2, group, and user3 even if it's already done for him
+    assert("ok" == respRevokeOther[0].status)
+    assert("ok" == respRevokeOther[1].status)
+    assert("ok" == respRevokeOther[2].status)
 
     // user2 cannot retrieve the session anymore
     do {
@@ -164,7 +180,12 @@ func runTests() {
     }
 
     // user1 revokes all. It can no longer retrieve it.
-    try! es1SDK1.revokeAll()
+    let respRevokeAll = try! es1SDK1.revokeAll()
+    assert(respRevokeAll.count == 4)
+    respRevokeAll.forEach { el in
+        assert("ok" == el.status)
+    }
+    
     do {
         let _ = try sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
