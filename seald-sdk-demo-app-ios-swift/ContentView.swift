@@ -103,6 +103,7 @@ func runTests() {
     
     // The retrieved session can decrypt the file.
     // The decrypted file will be named with the name it has at encryption. Any renaming of the encrypted file will be ignored.
+    // NOTE: In this example, the decrypted file will have `(1)` suffix to avoid overwriting the original clear file.
     let decryptedFileURI = try! es1SDK1FromFile.decryptFile(fromURI: encryptedFileURI)
     assert(decryptedFileURI.hasSuffix("testfile (1).txt"))
     let decryptedFileContent = try! String(contentsOfFile: decryptedFileURI, encoding: .utf8)
@@ -133,9 +134,6 @@ func runTests() {
     // Revoking someone who is not in the session does not throw, but the status will be "ko"
     let respRevokeBefore = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     assert(respRevokeBefore.count == 1)
-    print("user3AccountInfo.userId \(user3AccountInfo.userId)")
-    print("respRevokeBefore \(respRevokeBefore[0].userId)")
-    print("respRevokeBefore \(respRevokeBefore[0].status)")
     assert(user3AccountInfo.userId == respRevokeBefore[0].userId)
     assert("ko" == respRevokeBefore[0].status)
     
