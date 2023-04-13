@@ -134,14 +134,12 @@ func runTests() {
     // Revoking someone who is not in the session does not throw, but the status will be "ko"
     let respRevokeBefore = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     assert(respRevokeBefore.count == 1)
-    assert(user3AccountInfo.userId == respRevokeBefore[0].userId)
-    assert("ko" == respRevokeBefore[0].status)
+    assert("ko" == (respRevokeBefore[user3AccountInfo.userId] as! SealdActionStatus).status)
     
     // user2 adds user3 as recipient of the encryption session.
     let respAdd = try! es1SDK2.addRecipients([user3AccountInfo.userId])
     assert(respAdd.count == 1)
-    assert(user3AccountInfo.deviceId == respAdd[0].userId)
-    assert("ok" == respAdd[0].status)
+    assert("ok" == (respAdd[user3AccountInfo.deviceId] as! SealdActionStatus).status)
 
     // user3 can now retrieve it.
     let es1SDK3 = try! sdk3.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: false)
@@ -151,9 +149,8 @@ func runTests() {
     // user2 revokes user3 from the encryption session.
     let respRevoke = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     assert(respRevoke.count == 1)
-    assert(user3AccountInfo.userId == respRevoke[0].userId)
-    assert("ok" == respRevoke[0].status)
-    
+    assert("ok" == (respRevoke[user3AccountInfo.userId] as! SealdActionStatus).status)
+
     // user3 cannot retrieve the session anymore
     do {
         let _ = try sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
@@ -165,9 +162,9 @@ func runTests() {
     // user1 revokes all other recipients from the session
     let respRevokeOther = try! es1SDK1.revokeOthers()
     assert(respRevokeOther.count == 3) // revoke user2, group, and user3 even if it's already done for him
-    assert("ok" == respRevokeOther[0].status)
-    assert("ok" == respRevokeOther[1].status)
-    assert("ok" == respRevokeOther[2].status)
+    assert("ok" == (respRevokeOther[groupId] as! SealdActionStatus).status)
+    assert("ok" == (respRevokeOther[user2AccountInfo.userId] as! SealdActionStatus).status)
+    assert("ok" == (respRevokeOther[user3AccountInfo.userId] as! SealdActionStatus).status)
 
     // user2 cannot retrieve the session anymore
     do {
@@ -180,8 +177,8 @@ func runTests() {
     // user1 revokes all. It can no longer retrieve it.
     let respRevokeAll = try! es1SDK1.revokeAll()
     assert(respRevokeAll.count == 4)
-    respRevokeAll.forEach { el in
-        assert("ok" == el.status)
+    for (_, value) in respRevokeAll {
+        assert("ok" == (value as! SealdActionStatus).status)
     }
     
     do {
