@@ -10,14 +10,113 @@ import SwiftUI
 import SealdSdk
 import JWT
 
-func runTests() {
+struct TestCredentials {
+    var apiURL: String
+    var appId: String
+    var JWTSharedSecretId: String
+    var JWTSharedSecret: String
+    var ssksUrl: String
+    var ssksBackendAppId: String
+    var ssksBackendAppKey: String
+    var ssksTMRChallenge: String
+}
+
+func runTests() async {
+    let testCredentials = TestCredentials(
+        apiURL: "https://api-dev.soyouz.seald.io/",
+        appId: "00000000-0000-1000-a000-7ea300000018",
+        JWTSharedSecretId: "00000000-0000-1000-a000-7ea300000019",
+        JWTSharedSecret: "o75u89og9rxc9me54qxaxvdutr2t4t25ozj4m64utwemm0osld0zdb02j7gv8t7x",
+        ssksUrl: "https://ssks.soyouz.seald.io/",
+        ssksBackendAppId: "00000000-0000-0000-0000-000000000001",
+        ssksBackendAppKey: "00000000-0000-0000-0000-000000000002",
+        ssksTMRChallenge: "aaaaaaaa"
+    )
+
+    async let testSDK: () = sdkTests(testCredentials: testCredentials)
+    async let testSsksPassword: () = ssksPasswordTests(testCredentials: testCredentials)
+    async let testSsksTMR: () = ssksTMRTests(testCredentials: testCredentials)
+
+    await testSDK
+    await testSsksPassword
+    await testSsksTMR
+}
+
+func ssksPasswordTests(testCredentials: TestCredentials) async {
+    let rand = generateRandomString(length: 10)
+    let userId = "user-\(rand)"
+    let userPassword = userId
+    let userIdentity = userId.data(using: .utf8)!
+    
+    let ssksPassword = SealdSsksPasswordPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+    
+    try! ssksPassword.saveIdentity(fromPassword: userId, password: userPassword, identity: userIdentity)
+    let retrieveResp = try! ssksPassword.retrieveIdentity(fromPassword: userId, password: userPassword)
+    assert(retrieveResp == userIdentity)
+    
+    let newPassword = "another password"
+    try! ssksPassword.changeIdentityPassword(userId, currentPassword: userPassword, newPassword: newPassword)
+    let retrieveRespNewPassword = try! ssksPassword.retrieveIdentity(fromPassword: userId, password: newPassword)
+    assert(retrieveRespNewPassword == userIdentity)
+    
+    // Test with raw keys
+    let rawStorageKey = generateRandomString(length: 32);
+    let rawEncryptionKey = generateRandomString(length: 64).data(using: .utf8)!
+    
+    try! ssksPassword.saveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: userIdentity)
+    let retrieveRespRawKeys = try! ssksPassword.retrieveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
+    assert(retrieveRespRawKeys == userIdentity)
+    
+    let emptyData = Data.init()
+    try! ssksPassword.saveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: emptyData)
+
+    do {
+        try ssksPassword.retrieveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("ssks password cannot find identity with this id/password combination"))
+    }
+}
+
+func ssksTMRTests(testCredentials: TestCredentials) async {
+    let ssksBackend = SSKSBackend(keyStorageURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId, appKey: testCredentials.ssksBackendAppKey)
+    
+    let rawTMRSymKey = generateRandomString(length: 64).data(using: .utf8)!
+    
+    let rand = generateRandomString(length: 10)
+    let userId = "user-\(rand)"
+    let userEM = "user-\(rand)@test.com"
+    let userIdentity = userId.data(using: .utf8)!
+    
+    let authFactor = SealdSsksAuthFactor(value: userEM, type: "EM")
+    
+    let authSession = try! await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: true)
+    
+    let ssksTMR = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+    
+    try! ssksTMR.saveIdentity(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey, identity: userIdentity)
+    
+    let retrieveResp = try! ssksTMR.retrieveIdentity(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
+    assert(!retrieveResp.shouldRenewKey)
+    assert(retrieveResp.identity == userIdentity)
+}
+
+func generateRandomString(length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyz0123456789"
+    var randomString = ""
+    for _ in 0..<length {
+        let randomIndex = Int(arc4random_uniform(UInt32(letters.count)))
+        let randomLetter = letters[letters.index(letters.startIndex, offsetBy: randomIndex)]
+        randomString += String(randomLetter)
+    }
+    return randomString
+}
+
+func sdkTests(testCredentials: TestCredentials) async {
     // Seald account infos:
     // First step with Seald: https://docs.seald.io/en/sdk/guides/1-quick-start.html
     // Create a team here: https://www.seald.io/create-sdk
-    let apiURL = "https://api-dev.soyouz.seald.io/"
-    let appId = "00000000-0000-1000-a000-7ea300000018"
-    let JWTSharedSecretId = "00000000-0000-1000-a000-7ea300000019"
-    let JWTSharedSecret = "o75u89og9rxc9me54qxaxvdutr2t4t25ozj4m64utwemm0osld0zdb02j7gv8t7x"
+
     
     // The Seald SDK uses a local database that will persist on disk.
     // When instantiating a SealdSDK, it is highly recommended to set a symmetric key to encrypt this database.
@@ -39,13 +138,13 @@ func runTests() {
     // However, as this is a demo without a backend, we will use them on the frontend.
     // JWT documentation: https://docs.seald.io/en/sdk/guides/jwt.html
     // identity documentation: https://docs.seald.io/en/sdk/guides/4-identities.html
-    let jwtBuilder = JWTBuilder(JWTSharedSecretId: JWTSharedSecretId, JWTSharedSecret: JWTSharedSecret)
+    let jwtBuilder = JWTBuilder(JWTSharedSecretId: testCredentials.JWTSharedSecretId, JWTSharedSecret: testCredentials.JWTSharedSecret)
 
     
     // let's instantiate 3 SealdSDK. They will correspond to 3 users that will exchange messages.
-    let sdk1 = try! SealdSdk.init(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk1", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User1", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
-    let sdk2 = try! SealdSdk.init(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk2", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User2", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
-    let sdk3 = try! SealdSdk.init(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk3", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User3", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
+    let sdk1 = try! SealdSdk.init(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk1", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User1", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
+    let sdk2 = try! SealdSdk.init(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk2", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User2", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
+    let sdk3 = try! SealdSdk.init(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk3", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "User3", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: 0, keySize: 4096)
     
     // retrieve info about current user before creating a user should return null
     let retrieveNoAccount = sdk1.getCurrentAccountInfo()
@@ -130,16 +229,16 @@ func runTests() {
     } catch {
         assert(error.localizedDescription.contains("status: 404"))
     }
-
+    
     // Revoking someone who is not in the session does not throw, but the status will be "ko"
     let respRevokeBefore = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     assert(respRevokeBefore.count == 1)
-    assert(!(respRevokeBefore[user3AccountInfo.userId] as! SealdActionStatus).success)
+    assert(!(respRevokeBefore[user3AccountInfo.userId]!).success)
     
     // user2 adds user3 as recipient of the encryption session.
     let respAdd = try! es1SDK2.addRecipients([user3AccountInfo.userId])
     assert(respAdd.count == 1)
-    assert((respAdd[user3AccountInfo.deviceId] as! SealdActionStatus).success)
+    assert((respAdd[user3AccountInfo.deviceId]!).success)
 
     // user3 can now retrieve it.
     let es1SDK3 = try! sdk3.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: false)
@@ -149,7 +248,7 @@ func runTests() {
     // user2 revokes user3 from the encryption session.
     let respRevoke = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
     assert(respRevoke.count == 1)
-    assert((respRevoke[user3AccountInfo.userId] as! SealdActionStatus).success)
+    assert((respRevoke[user3AccountInfo.userId]!).success)
 
     // user3 cannot retrieve the session anymore
     do {
@@ -162,9 +261,9 @@ func runTests() {
     // user1 revokes all other recipients from the session
     let respRevokeOther = try! es1SDK1.revokeOthers()
     assert(respRevokeOther.count == 3) // revoke user2, group, and user3 even if it's already done for him
-    assert((respRevokeOther[groupId] as! SealdActionStatus).success)
-    assert((respRevokeOther[user2AccountInfo.userId] as! SealdActionStatus).success)
-    assert((respRevokeOther[user3AccountInfo.userId] as! SealdActionStatus).success)
+    assert((respRevokeOther[groupId]!).success)
+    assert((respRevokeOther[user2AccountInfo.userId]!).success)
+    assert((respRevokeOther[user3AccountInfo.userId]!).success)
 
     // user2 cannot retrieve the session anymore
     do {
@@ -178,9 +277,8 @@ func runTests() {
     let respRevokeAll = try! es1SDK1.revokeAll()
     assert(respRevokeAll.count == 4)
     for (_, value) in respRevokeAll {
-        assert((value as! SealdActionStatus).success)
+        assert(value.success)
     }
-    
     do {
         let _ = try sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
@@ -203,7 +301,7 @@ func runTests() {
 
     // we can add a custom userId using a JWT
     let customConnectorJWTValue = "user1-custom-id"
-    let addConnectorJWT = jwtBuilder.connectorJWT(customUserId: customConnectorJWTValue, appId: appId)
+    let addConnectorJWT = jwtBuilder.connectorJWT(customUserId: customConnectorJWTValue, appId: testCredentials.appId)
     try! sdk1.pushJWT(addConnectorJWT)
 
     // we can list a user connectors
@@ -212,14 +310,14 @@ func runTests() {
     assert(connectors[0].state == "VO")
     assert(connectors[0].type == "AP")
     assert(connectors[0].sealdId == user1AccountInfo.userId)
-    assert(connectors[0].value == "\(customConnectorJWTValue)@\(appId)")
+    assert(connectors[0].value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Retrieve connector by its id
     let retrieveConnector = try! sdk1.retrieveConnector(connectors[0].connectorId)
     assert(retrieveConnector.sealdId == user1AccountInfo.userId)
     assert(retrieveConnector.state == "VO")
     assert(retrieveConnector.type == "AP")
-    assert(retrieveConnector.value == "\(customConnectorJWTValue)@\(appId)")
+    assert(retrieveConnector.value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Retrieve connectors from a user id.
     let connectorsFromSealdId = try! sdk1.getConnectorsFromSealdId(user1AccountInfo.userId)
@@ -227,10 +325,10 @@ func runTests() {
     assert(connectorsFromSealdId[0].state == "VO")
     assert(connectorsFromSealdId[0].type == "AP")
     assert(connectorsFromSealdId[0].sealdId == user1AccountInfo.userId)
-    assert(connectorsFromSealdId[0].value == "\(customConnectorJWTValue)@\(appId)")
+    assert(connectorsFromSealdId[0].value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Get sealdId of a user from a connector
-    let sealdIds = try! sdk2.getSealdIds(fromConnectors: [SealdConnectorTypeValue(type: "AP", value: "\(customConnectorJWTValue)@\(appId)")])
+    let sealdIds = try! sdk2.getSealdIds(fromConnectors: [SealdConnectorTypeValue(type: "AP", value: "\(customConnectorJWTValue)@\(testCredentials.appId)")])
     assert(sealdIds.count == 1)
     assert(sealdIds[0] == user1AccountInfo.userId)
 
@@ -245,7 +343,7 @@ func runTests() {
     let exportIdentity = try! sdk1.exportIdentity()
 
     // We can instantiate a new SealdSDK, import the exported identity
-    let sdk1Exported = try! SealdSdk(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk1Exported", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1Exported", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
+    let sdk1Exported = try! SealdSdk(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk1Exported", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1Exported", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
     try! sdk1Exported.importIdentity(exportIdentity)
 
     // SDK with imported identity can decrypt
@@ -260,7 +358,7 @@ func runTests() {
     // first device needs to reencrypt for the new device
     try! sdk1.massReencrypt(withDeviceId: subIdentity.deviceId, options: SealdMassReencryptOptions())
     // We can instantiate a new SealdSDK, import the sub-device identity
-    let sdk1SubDevice = try! SealdSdk(apiUrl: apiURL, appId: appId, dbPath: "\(sealdDir)/sdk1SubDevice", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1SubDevice", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
+    let sdk1SubDevice = try! SealdSdk(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk1SubDevice", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1SubDevice", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
     try! sdk1SubDevice.importIdentity(subIdentity.backupKey)
 
     // sub device can decrypt
@@ -281,8 +379,8 @@ struct ContentView: View {
     var body: some View {
         Text("Hello, world!")
             .padding()
-            .onAppear{
-                runTests()
+            .task{
+                await runTests()
             }
     }
 }
