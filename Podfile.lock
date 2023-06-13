@@ -2,7 +2,7 @@ PODS:
   - Base64 (1.1.2)
   - JWT (3.0.0-beta.3):
     - Base64 (~> 1.1.2)
-  - SealdSdk (0.1.0-beta.49591)
+  - SealdSdk (0.1.0-beta.52305)
 
 DEPENDENCIES:
   - Base64
@@ -21,7 +21,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   JWT: a2e44b0d2273e28ae68cec30e95d3d460c76c298
-  SealdSdk: 63490597cb901262f358a33e0fce6c9f3a90864a
+  SealdSdk: a35bee7b7db527df22a8043ebb987e0bfd5d043e
 
 PODFILE CHECKSUM: 9540cef53c4f23bd6f612b69769012e946174323
 
