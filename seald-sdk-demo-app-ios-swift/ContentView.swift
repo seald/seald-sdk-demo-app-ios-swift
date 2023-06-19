@@ -34,12 +34,12 @@ func runTests() async {
     )
 
     async let testSDK: () = sdkTests(testCredentials: testCredentials)
-//    async let testSsksPassword: () = ssksPasswordTests(testCredentials: testCredentials)
-//    async let testSsksTMR: () = ssksTMRTests(testCredentials: testCredentials)
+    async let testSsksPassword: () = ssksPasswordTests(testCredentials: testCredentials)
+    async let testSsksTMR: () = ssksTMRTests(testCredentials: testCredentials)
 
     await testSDK
-//    await testSsksPassword
-//    await testSsksTMR
+    await testSsksPassword
+    await testSsksTMR
 }
 
 func ssksPasswordTests(testCredentials: TestCredentials) async {
@@ -50,28 +50,28 @@ func ssksPasswordTests(testCredentials: TestCredentials) async {
     
     let ssksPassword = SealdSsksPasswordPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
     
-    try! ssksPassword.saveIdentityFromPassword(withUserId: userId, password: userPassword, identity: userIdentity)
-    let retrieveResp = try! ssksPassword.retrieveIdentity(fromPassword: userId, password: userPassword)
+    try! await ssksPassword.saveIdentityAsync(withUserId: userId, password: userPassword, identity: userIdentity)
+    let retrieveResp = try! await ssksPassword.retrieveIdentityAsync(withUserId: userId, password: userPassword)
     assert(retrieveResp == userIdentity)
     
     let newPassword = "another password"
-    try! ssksPassword.changeIdentityPassword(userId, currentPassword: userPassword, newPassword: newPassword)
-    let retrieveRespNewPassword = try! ssksPassword.retrieveIdentity(fromPassword: userId, password: newPassword)
+    try! await ssksPassword.changeIdentityPasswordAsync(withUserId: userId, currentPassword: userPassword, newPassword: newPassword)
+    let retrieveRespNewPassword = try! await ssksPassword.retrieveIdentityAsync(withUserId: userId, password: newPassword)
     assert(retrieveRespNewPassword == userIdentity)
     
     // Test with raw keys
     let rawStorageKey = generateRandomString(length: 32);
     let rawEncryptionKey = generateRandomString(length: 64).data(using: .utf8)!
     
-    try! ssksPassword.saveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: userIdentity)
-    let retrieveRespRawKeys = try! ssksPassword.retrieveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
+    try! await ssksPassword.saveIdentityAsync(withUserId: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: userIdentity)
+    let retrieveRespRawKeys = try! await ssksPassword.retrieveIdentityAsync(withUserId: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
     assert(retrieveRespRawKeys == userIdentity)
     
     let emptyData = Data.init()
-    try! ssksPassword.saveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: emptyData)
+    try! await ssksPassword.saveIdentityAsync(withUserId: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey, identity: emptyData)
 
     do {
-        try ssksPassword.retrieveIdentity(fromRawKeys: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
+        try await ssksPassword.retrieveIdentityAsync(withUserId: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
         assert(false, "expected error")
     } catch {
         assert(error.localizedDescription.contains("ssks password cannot find identity with this id/password combination"))
@@ -87,16 +87,16 @@ func ssksTMRTests(testCredentials: TestCredentials) async {
     let userId = "user-\(rand)"
     let userEM = "user-\(rand)@test.com"
     let userIdentity = userId.data(using: .utf8)!
-    
+
     let authFactor = SealdSsksAuthFactor(value: userEM, type: "EM")
-    
+
     let authSession = try! await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: true)
     
     let ssksTMR = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
     
-    try! ssksTMR.saveIdentity(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey, identity: userIdentity)
+    try! await ssksTMR.saveIdentityAsync(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey, identity: userIdentity)
     
-    let retrieveResp = try! ssksTMR.retrieveIdentity(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
+    let retrieveResp = try! await ssksTMR.retrieveIdentityAsync(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
     assert(!retrieveResp.shouldRenewKey)
     assert(retrieveResp.identity == userIdentity)
 }
@@ -152,31 +152,12 @@ func sdkTests(testCredentials: TestCredentials) async {
 
     
     // Create the 3 accounts. Again, the signupJWT should be generated by your backend
-    let user1AccountInfo = try! sdk1.createAccount(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User1", expireAfter: 5 * 365 * 24 * 60 * 60)
-    let user2AccountInfo = try! sdk2.createAccount(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User2", expireAfter: 5 * 365 * 24 * 60 * 60)
-    let user3AccountInfo = try! sdk3.createAccount(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User3", expireAfter: 5 * 365 * 24 * 60 * 60)
-    
-    
-    func someFunction() async throws -> SealdAccountInfo {
-        return try await withUnsafeThrowingContinuation { continuation in
-            sdk1.getCurrentAccountInfoAsync(completionHandler: { data, err in
-                if let error = err {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: data)
-                }x
-            })
-        }
-    }
-    let accInf = try! await someFunction()
-    print("YOYOYO", accInf.userId)
-    print("YOYOYO", accInf.userId)
-    print("YOYOYO", accInf.userId)
-    
-    return
-    
+    let user1AccountInfo = try! await sdk1.createAccountAsync(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User1", expireAfter: 5 * 365 * 24 * 60 * 60)
+    let user2AccountInfo = try! await sdk2.createAccountAsync(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User2", expireAfter: 5 * 365 * 24 * 60 * 60)
+    let user3AccountInfo = try! await sdk3.createAccountAsync(withSignupJwt: jwtBuilder.signupJWT(), deviceName: "MyDeviceName", displayName: "User3", expireAfter: 5 * 365 * 24 * 60 * 60)
+
     // retrieve info about current user:
-    let retrieveAccountInfo = sdk1.getCurrentAccountInfo()
+    let retrieveAccountInfo = await sdk1.getCurrentAccountInfoAsync()
     assert(retrieveAccountInfo != nil)
     assert(retrieveAccountInfo?.userId == user1AccountInfo.userId)
     assert(retrieveAccountInfo?.deviceId == user1AccountInfo.deviceId)
@@ -185,27 +166,27 @@ func sdkTests(testCredentials: TestCredentials) async {
     let groupName = "group-1"
     let groupMembers = [user1AccountInfo.userId]
     let groupAdmins = [user1AccountInfo.userId]
-    let groupId = try! sdk1.createGroup(groupName, members: groupMembers, admins: groupAdmins)
+    let groupId = try! await sdk1.createGroupAsync(withGroupName: groupName, members: groupMembers, admins: groupAdmins)
     
     // Manage group members and admins
-    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user2AccountInfo.userId], adminsToSet: []) // Add user2 as group member
-    try! sdk1.addGroupMembers(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId], adminsToSet: [user3AccountInfo.userId]) // user1 adds user3 as group member and group admin
-    try! sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user2AccountInfo.userId]) // user3 can remove user2
-    try! sdk3.setGroupAdminsWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId]) // user3 can remove user1 from admins
+    try! await sdk1.addGroupMembersAsync(withGroupId: groupId, membersToAdd: [user2AccountInfo.userId], adminsToSet: []) // Add user2 as group member
+    try! await sdk1.addGroupMembersAsync(withGroupId: groupId, membersToAdd: [user3AccountInfo.userId], adminsToSet: [user3AccountInfo.userId]) // user1 adds user3 as group member and group admin
+    try! await sdk3.removeGroupMembersAsync(withGroupId: groupId, membersToRemove: [user2AccountInfo.userId]) // user3 can remove user2
+    try! await sdk3.setGroupAdminsAsyncWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId]) // user3 can remove user1 from admins
     
     // Create encryption session: https://docs.seald.io/sdk/guides/6-encryption-sessions.html
     let recipients = [user1AccountInfo.userId, user2AccountInfo.userId, groupId]
-    let es1SDK1 = try! sdk1.createEncryptionSession(withRecipients: recipients, useCache: true) // user1, user2, and group as recipients
+    let es1SDK1 = try! await sdk1.createEncryptionSessionAsync(withRecipients: recipients, useCache: true) // user1, user2, and group as recipients
 
     // The SealdEncryptionSession object can encrypt and decrypt for user1
     let initialString = "a message that needs to be encrypted!"
-    let encryptedMessage = try! es1SDK1.encryptMessage(initialString)
-    let decryptedMessage = try! es1SDK1.decryptMessage(encryptedMessage)
+    let encryptedMessage = try! await es1SDK1.encryptMessageAsync(initialString)
+    let decryptedMessage = try! await es1SDK1.decryptMessageAsync(encryptedMessage)
     assert(initialString == decryptedMessage)
 
     // user1 can retrieve the EncryptionSession from the encrypted message
-    let es1SDK1RetrieveFromMess = try! sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: true)
-    let decryptedMessageFromMess = try! es1SDK1RetrieveFromMess.decryptMessage(encryptedMessage)
+    let es1SDK1RetrieveFromMess = try! await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true)
+    let decryptedMessageFromMess = try! await es1SDK1RetrieveFromMess.decryptMessageAsync(encryptedMessage)
     assert(initialString == decryptedMessageFromMess)
     
     // Create a test file on disk that we will encrypt/decrypt
@@ -215,106 +196,101 @@ func sdkTests(testCredentials: TestCredentials) async {
     try! fileContent.write(toFile: filePath, atomically: true, encoding: .utf8)
 
     // Encrypt the test file. Resulting file will be written alongside the source file, with `.seald` extension added
-    let encryptedFileURI = try! es1SDK1.encryptFile(fromURI: filePath)
+    let encryptedFileURI = try! await es1SDK1.encryptFileAsync(fromURI: filePath)
     
     // User1 can retrieve the encryptionSession directly from the encrypted file
-    let es1SDK1FromFile = try! sdk1.retrieveEncryptionSession(fromFile: encryptedFileURI, useCache: true)
+    let es1SDK1FromFile = try! await sdk1.retrieveEncryptionSessionAsync(fromFile: encryptedFileURI, useCache: true)
     
     // The retrieved session can decrypt the file.
     // The decrypted file will be named with the name it has at encryption. Any renaming of the encrypted file will be ignored.
     // NOTE: In this example, the decrypted file will have `(1)` suffix to avoid overwriting the original clear file.
-    let decryptedFileURI = try! es1SDK1FromFile.decryptFile(fromURI: encryptedFileURI)
+    let decryptedFileURI = try! await es1SDK1FromFile.decryptFileAsync(fromURI: encryptedFileURI)
     assert(decryptedFileURI.hasSuffix("testfile (1).txt"))
     let decryptedFileContent = try! String(contentsOfFile: decryptedFileURI, encoding: .utf8)
     assert(fileContent == decryptedFileContent)
 
     // user2 and user3 can retrieve the encryptionSession (from the encrypted message or the session ID).
-    let es1SDK2 = try! sdk2.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: true)
-    let decryptedMessageSDK2 = try! es1SDK2.decryptMessage(encryptedMessage)
+    let es1SDK2 = try! await sdk2.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: true)
+    let decryptedMessageSDK2 = try! await es1SDK2.decryptMessageAsync(encryptedMessage)
     assert(initialString == decryptedMessageSDK2)
 
-    let es1SDK3FromGroup = try! sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: true)
-    let decryptedMessageSDK3 = try! es1SDK3FromGroup.decryptMessage(encryptedMessage)
+    let es1SDK3FromGroup = try! await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true)
+    let decryptedMessageSDK3 = try! await es1SDK3FromGroup.decryptMessageAsync(encryptedMessage)
     assert(initialString == decryptedMessageSDK3)
 
     // user3 removes all members of "group-1". A group without member is deleted.
-    try! sdk3.removeGroupMembers(withGroupId: groupId, membersToRemove: [user1AccountInfo.userId, user3AccountInfo.userId])
+    try! await sdk3.removeGroupMembersAsync(withGroupId: groupId, membersToRemove: [user1AccountInfo.userId, user3AccountInfo.userId])
 
     // user3 could retrieve the previous encryption session only because "group-1" was set as recipient.
     // As the group was deleted, it can no longer access it.
     // user3 still has the encryption session in its cache, but we can disable it.
     do {
-        let _ = try sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
     } catch {
         assert(error.localizedDescription.contains("status: 404"))
     }
     
-    // Revoking someone who is not in the session does not throw, but the status will be "ko"
-    let respRevokeBefore = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
-    assert(respRevokeBefore.count == 1)
-    assert(!(respRevokeBefore[user3AccountInfo.userId]!).success)
-    
     // user2 adds user3 as recipient of the encryption session.
-    let respAdd = try! es1SDK2.addRecipients([user3AccountInfo.userId])
+    let respAdd = try! await es1SDK2.addRecipientsAsync([user3AccountInfo.userId])
     assert(respAdd.count == 1)
     assert((respAdd[user3AccountInfo.deviceId]!).success)
 
     // user3 can now retrieve it.
-    let es1SDK3 = try! sdk3.retrieveEncryptionSession(withSessionId: es1SDK1.sessionId, useCache: false)
-    let decryptedMessageAfterAdd = try! es1SDK3.decryptMessage(encryptedMessage)
+    let es1SDK3 = try! await sdk3.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: false)
+    let decryptedMessageAfterAdd = try! await es1SDK3.decryptMessageAsync(encryptedMessage)
     assert(initialString == decryptedMessageAfterAdd)
 
-    // user2 revokes user3 from the encryption session.
-    let respRevoke = try! es1SDK2.revokeRecipients([user3AccountInfo.userId])
+    // user1 revokes user3 from the encryption session.
+    // TODO: used to be user2 instead of user1 which does the revoke, but not possible until https://gitlab.tardis.seald.io/seald/go-seald-sdk/-/issues/83
+    let respRevoke = try! await es1SDK1.revokeRecipientsAsync([user3AccountInfo.userId])
     assert(respRevoke.count == 1)
     assert((respRevoke[user3AccountInfo.userId]!).success)
 
     // user3 cannot retrieve the session anymore
     do {
-        let _ = try sdk3.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
     } catch {
         assert(error.localizedDescription.contains("status: 404"))
     }
 
     // user1 revokes all other recipients from the session
-    let respRevokeOther = try! es1SDK1.revokeOthers()
-    assert(respRevokeOther.count == 3) // revoke user2, group, and user3 even if it's already done for him
+    let respRevokeOther = try! await es1SDK1.revokeOthersAsync()
+    assert(respRevokeOther.count == 2) // revoke user2 and group
     assert((respRevokeOther[groupId]!).success)
     assert((respRevokeOther[user2AccountInfo.userId]!).success)
-    assert((respRevokeOther[user3AccountInfo.userId]!).success)
 
     // user2 cannot retrieve the session anymore
     do {
-        let _ = try sdk2.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        let _ = try await sdk2.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
     } catch {
         assert(error.localizedDescription.contains("status: 404"))
     }
 
     // user1 revokes all. It can no longer retrieve it.
-    let respRevokeAll = try! es1SDK1.revokeAll()
-    assert(respRevokeAll.count == 4)
+    let respRevokeAll = try! await es1SDK1.revokeAllAsync()
+    assert(respRevokeAll.count == 1)
     for (_, value) in respRevokeAll {
         assert(value.success)
     }
     do {
-        let _ = try sdk1.retrieveEncryptionSession(fromMessage: encryptedMessage, useCache: false)
+        let _ = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
     } catch {
         assert(error.localizedDescription.contains("status: 404"))
     }
     
     // Create additional data for user1
-    let es2SDK1 = try! sdk1.createEncryptionSession(withRecipients: [user1AccountInfo.userId], useCache: true)
+    let es2SDK1 = try! await sdk1.createEncryptionSessionAsync(withRecipients: [user1AccountInfo.userId], useCache: true)
     let anotherMessage = "nobody should read that!"
-    let secondEncryptedMessage = try! es2SDK1.encryptMessage(anotherMessage)
+    let secondEncryptedMessage = try! await es2SDK1.encryptMessageAsync(anotherMessage)
 
     // user1 can renew its key, and still decrypt old messages
     try! sdk1.renewKeysWithExpire(after: TimeInterval( 5 * 365 * 24 * 60 * 60))
-    let es2SDK1AfterRenew = try! sdk1.retrieveEncryptionSession(withSessionId: es2SDK1.sessionId, useCache: false)
-    let decryptedMessageAfterRenew = try! es2SDK1AfterRenew.decryptMessage(secondEncryptedMessage)
+    let es2SDK1AfterRenew = try! await sdk1.retrieveEncryptionSessionAsync(withSessionId: es2SDK1.sessionId, useCache: false)
+    let decryptedMessageAfterRenew = try! await es2SDK1AfterRenew.decryptMessageAsync(secondEncryptedMessage)
     assert(anotherMessage == decryptedMessageAfterRenew)
 
     // CONNECTORS https://docs.seald.io/en/sdk/guides/jwt.html#adding-a-userid
@@ -322,10 +298,10 @@ func sdkTests(testCredentials: TestCredentials) async {
     // we can add a custom userId using a JWT
     let customConnectorJWTValue = "user1-custom-id"
     let addConnectorJWT = jwtBuilder.connectorJWT(customUserId: customConnectorJWTValue, appId: testCredentials.appId)
-    try! sdk1.pushJWT(addConnectorJWT)
+    try! await sdk1.pushJWTAsync(withJWT: addConnectorJWT)
 
     // we can list a user connectors
-    let connectors = try! sdk1.listConnectors()
+    let connectors = try! await sdk1.listConnectorsAsync()
     assert(connectors.count == 1)
     assert(connectors[0].state == "VO")
     assert(connectors[0].type == "AP")
@@ -333,14 +309,14 @@ func sdkTests(testCredentials: TestCredentials) async {
     assert(connectors[0].value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Retrieve connector by its id
-    let retrieveConnector = try! sdk1.retrieveConnector(connectors[0].connectorId)
+    let retrieveConnector = try! await sdk1.retrieveConnectorAsync(withConnectorId: connectors[0].connectorId)
     assert(retrieveConnector.sealdId == user1AccountInfo.userId)
     assert(retrieveConnector.state == "VO")
     assert(retrieveConnector.type == "AP")
     assert(retrieveConnector.value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Retrieve connectors from a user id.
-    let connectorsFromSealdId = try! sdk1.getConnectorsFromSealdId(user1AccountInfo.userId)
+    let connectorsFromSealdId = try! await sdk1.getConnectorsAsyncFromSealdId(sealdId: user1AccountInfo.userId)
     assert(connectorsFromSealdId.count == 1)
     assert(connectorsFromSealdId[0].state == "VO")
     assert(connectorsFromSealdId[0].type == "AP")
@@ -348,51 +324,51 @@ func sdkTests(testCredentials: TestCredentials) async {
     assert(connectorsFromSealdId[0].value == "\(customConnectorJWTValue)@\(testCredentials.appId)")
 
     // Get sealdId of a user from a connector
-    let sealdIds = try! sdk2.getSealdIds(fromConnectors: [SealdConnectorTypeValue(type: "AP", value: "\(customConnectorJWTValue)@\(testCredentials.appId)")])
+    let sealdIds = try! await sdk2.getSealdIdsAsyncFromConnectors(connectorTypeValues: [SealdConnectorTypeValue(type: "AP", value: "\(customConnectorJWTValue)@\(testCredentials.appId)")])
     assert(sealdIds.count == 1)
     assert(sealdIds[0] == user1AccountInfo.userId)
 
     // user1 can remove a connector
-    try! sdk1.removeConnector(connectors[0].connectorId)
+    try! await sdk1.removeConnectorAsync(withConnectorId: connectors[0].connectorId)
 
     // verify that only one connector left
-    let connectorListAfterRevoke = try! sdk1.listConnectors()
+    let connectorListAfterRevoke = try! await sdk1.listConnectorsAsync()
     assert(connectorListAfterRevoke.count == 0)
 
     // user1 can export its identity
-    let exportIdentity = try! sdk1.exportIdentity()
+    let exportIdentity = try! await sdk1.exportIdentityAsync()
 
     // We can instantiate a new SealdSDK, import the exported identity
     let sdk1Exported = try! SealdSdk(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk1Exported", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1Exported", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
-    try! sdk1Exported.importIdentity(exportIdentity)
+    try! await sdk1Exported.importIdentityAsync(withIdentity: exportIdentity)
 
     // SDK with imported identity can decrypt
-    let es2SDK1Exported = try! sdk1Exported.retrieveEncryptionSession(fromMessage: secondEncryptedMessage, useCache: true)
-    let clearMessageExportedIdentity = try! es2SDK1Exported.decryptMessage(secondEncryptedMessage)
+    let es2SDK1Exported = try! await sdk1Exported.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: true)
+    let clearMessageExportedIdentity = try! await es2SDK1Exported.decryptMessageAsync(secondEncryptedMessage)
     assert(anotherMessage == clearMessageExportedIdentity)
 
     // user1 can create sub identity
-    let subIdentity = try! sdk1.createSubIdentity(withDeviceName: "SUB-deviceName", expireAfter: TimeInterval( 5 * 365 * 24 * 60 * 60))
+    let subIdentity = try! await sdk1.createSubIdentityAsync(withDeviceName: "SUB-deviceName", expireAfter: TimeInterval( 5 * 365 * 24 * 60 * 60))
     assert(subIdentity.deviceId != "")
 
     // first device needs to reencrypt for the new device
-    try! sdk1.massReencrypt(withDeviceId: subIdentity.deviceId, options: SealdMassReencryptOptions())
+    try! await sdk1.massReencryptAsync(withDeviceId: subIdentity.deviceId, options: SealdMassReencryptOptions())
     // We can instantiate a new SealdSDK, import the sub-device identity
     let sdk1SubDevice = try! SealdSdk(apiUrl: testCredentials.apiURL, appId: testCredentials.appId, dbPath: "\(sealdDir)/sdk1SubDevice", dbb64SymKey: databaseEncryptionKeyB64, instanceName: "sdk1SubDevice", logLevel: -1, logNoColor: true, encryptionSessionCacheTTL: TimeInterval( 5 * 365 * 24 * 60 * 60), keySize: 4096)
-    try! sdk1SubDevice.importIdentity(subIdentity.backupKey)
+    try! await sdk1SubDevice.importIdentityAsync(withIdentity: subIdentity.backupKey)
 
     // sub device can decrypt
-    let es2SDK1SubDevice = try! sdk1SubDevice.retrieveEncryptionSession(fromMessage: secondEncryptedMessage, useCache: false)
-    let clearMessageSubdIdentity = try! es2SDK1SubDevice.decryptMessage(secondEncryptedMessage)
+    let es2SDK1SubDevice = try! await sdk1SubDevice.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: false)
+    let clearMessageSubdIdentity = try! await es2SDK1SubDevice.decryptMessageAsync(secondEncryptedMessage)
     assert(anotherMessage == clearMessageSubdIdentity)
 
     // users can send heartbeat
-    try! sdk1.heartbeat()
+    try! await sdk1.heartbeatAsync()
 
     // close SDKs
-    try! sdk1.close()
-    try! sdk2.close()
-    try! sdk3.close()
+    try! await sdk1.closeAsync()
+    try! await sdk2.closeAsync()
+    try! await sdk3.closeAsync()
 }
 
 struct ContentView: View {
