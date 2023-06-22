@@ -21,6 +21,21 @@ struct TestCredentials {
     var ssksTMRChallenge: String
 }
 
+func generateRandomString(length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyz0123456789"
+    var randomString = ""
+    for _ in 0..<length {
+        let randomIndex = Int(arc4random_uniform(UInt32(letters.count)))
+        let randomLetter = letters[letters.index(letters.startIndex, offsetBy: randomIndex)]
+        randomString += String(randomLetter)
+    }
+    return randomString
+}
+
+func generateRandomByteArray(length: Int) -> Data {
+    return generateRandomString(length: length).data(using: .utf8)!
+}
+
 func runTests() async {
     let testCredentials = TestCredentials(
         apiURL: "https://api-dev.soyouz.seald.io/",
@@ -56,6 +71,12 @@ func ssksPasswordTests(testCredentials: TestCredentials) async {
     
     let newPassword = "another password"
     try! await ssksPassword.changeIdentityPasswordAsync(withUserId: userId, currentPassword: userPassword, newPassword: newPassword)
+    do {
+        try await ssksPassword.retrieveIdentityAsync(withUserId: userId, password: userPassword)
+        assert(false, "expected error")
+    } catch {
+        assert(error.localizedDescription.contains("ssks password cannot find identity with this id/password combination"))
+    }
     let retrieveRespNewPassword = try! await ssksPassword.retrieveIdentityAsync(withUserId: userId, password: newPassword)
     assert(retrieveRespNewPassword == userIdentity)
     
@@ -86,7 +107,7 @@ func ssksTMRTests(testCredentials: TestCredentials) async {
     let rand = generateRandomString(length: 10)
     let userId = "user-\(rand)"
     let userEM = "user-\(rand)@test.com"
-    let userIdentity = userId.data(using: .utf8)!
+    let userIdentity = generateRandomByteArray(length: 10)
 
     let authFactor = SealdSsksAuthFactor(value: userEM, type: "EM")
 
@@ -99,17 +120,24 @@ func ssksTMRTests(testCredentials: TestCredentials) async {
     let retrieveResp = try! await ssksTMR.retrieveIdentityAsync(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
     assert(!retrieveResp.shouldRenewKey)
     assert(retrieveResp.identity == userIdentity)
-}
+    
+    // If initial key has been saved without being fully authenticated, you should renew the user's private key, and save it again.
+    // sdk.renewKeys(Duration.ofDays(365 * 5))
 
-func generateRandomString(length: Int) -> String {
-    let letters = "abcdefghijklmnopqrstuvwxyz0123456789"
-    var randomString = ""
-    for _ in 0..<length {
-        let randomIndex = Int(arc4random_uniform(UInt32(letters.count)))
-        let randomLetter = letters[letters.index(letters.startIndex, offsetBy: randomIndex)]
-        randomString += String(randomLetter)
-    }
-    return randomString
+    let identitySecondKey =  generateRandomByteArray(length: 10) // should be the result of: sdk.exportIdentity()
+    try! await ssksTMR.saveIdentityAsync(authSession.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey, identity: identitySecondKey)
+    let secondChallenge = try! await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: true)
+    assert(secondChallenge.must_authenticate)
+    let retrievedSecondKey = try! await ssksTMR.retrieveIdentityAsync(secondChallenge.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
+    assert(!retrievedSecondKey.shouldRenewKey)
+    assert(retrievedSecondKey.identity == identitySecondKey)
+
+    let ssksTMRInst2 = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+    let thirdChallenge = try! await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: true)
+    assert(thirdChallenge.must_authenticate)
+    let inst2Retrieve = try! await ssksTMRInst2.retrieveIdentityAsync(thirdChallenge.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)
+    assert(!inst2Retrieve.shouldRenewKey)
+    assert(inst2Retrieve.identity == identitySecondKey)
 }
 
 func sdkTests(testCredentials: TestCredentials) async {
@@ -202,7 +230,7 @@ func sdkTests(testCredentials: TestCredentials) async {
     let es1SDK1FromFile = try! await sdk1.retrieveEncryptionSessionAsync(fromFile: encryptedFileURI, useCache: true)
     
     // The retrieved session can decrypt the file.
-    // The decrypted file will be named with the name it has at encryption. Any renaming of the encrypted file will be ignored.
+    // The decrypted file will be named with the name it had at encryption. Any renaming of the encrypted file will be ignored.
     // NOTE: In this example, the decrypted file will have `(1)` suffix to avoid overwriting the original clear file.
     let decryptedFileURI = try! await es1SDK1FromFile.decryptFileAsync(fromURI: encryptedFileURI)
     assert(decryptedFileURI.hasSuffix("testfile (1).txt"))
@@ -272,9 +300,8 @@ func sdkTests(testCredentials: TestCredentials) async {
     // user1 revokes all. It can no longer retrieve it.
     let respRevokeAll = try! await es1SDK1.revokeAllAsync()
     assert(respRevokeAll.count == 1)
-    for (_, value) in respRevokeAll {
-        assert(value.success)
-    }
+    assert(respRevokeAll[user1AccountInfo.userId]!.success)
+
     do {
         let _ = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
         assert(false, "expected error")
