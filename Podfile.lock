@@ -7,22 +7,19 @@ PODS:
 DEPENDENCIES:
   - Base64
   - JWT (= 3.0.0-beta.3)
-  - SealdSdk (from `/Users/seald/seald/go-seald-sdk/ios_wrapper/`)
+  - SealdSdk (= 0.1.0-beta.52543)
 
 SPEC REPOS:
   trunk:
     - Base64
     - JWT
-
-EXTERNAL SOURCES:
-  SealdSdk:
-    :path: "/Users/seald/seald/go-seald-sdk/ios_wrapper/"
+    - SealdSdk
 
 SPEC CHECKSUMS:
   Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   JWT: a2e44b0d2273e28ae68cec30e95d3d460c76c298
   SealdSdk: 3a9d1a456f9757617ca8bd30467d593e164f288d
 
-PODFILE CHECKSUM: cb17356be6e6ee6b427210a741bad48956475596
+PODFILE CHECKSUM: 4453ac4816e17600a0fddb1fb0540f92d1ab0452
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
