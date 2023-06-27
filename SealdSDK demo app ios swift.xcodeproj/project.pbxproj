@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		277BE14E29BF880A00F1F346 /* jwt_builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277BE14D29BF880A00F1F346 /* jwt_builder.swift */; };
+		279523152A015859002236FF /* ssks_backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279523142A015859002236FF /* ssks_backend.swift */; };
 		914B6DEF29AE0A6900B9FDE9 /* seald_sdk_demo_app_ios_swiftApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914B6DEE29AE0A6900B9FDE9 /* seald_sdk_demo_app_ios_swiftApp.swift */; };
 		914B6DF129AE0A6900B9FDE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914B6DF029AE0A6900B9FDE9 /* ContentView.swift */; };
 		914B6DF329AE0A6D00B9FDE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 914B6DF229AE0A6D00B9FDE9 /* Assets.xcassets */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		277BE14D29BF880A00F1F346 /* jwt_builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jwt_builder.swift; sourceTree = "<group>"; };
+		279523142A015859002236FF /* ssks_backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ssks_backend.swift; sourceTree = "<group>"; };
 		54F56B2C1B9AC659C1CDE76F /* Pods-SealdSDK demo app ios swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SealdSDK demo app ios swift.release.xcconfig"; path = "Target Support Files/Pods-SealdSDK demo app ios swift/Pods-SealdSDK demo app ios swift.release.xcconfig"; sourceTree = "<group>"; };
 		59DAAE1C7EBA551D4836388F /* Pods_SealdSDK_demo_app_ios_swiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SealdSDK_demo_app_ios_swiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BBEB903BC7AC78BFE4C9A7 /* Pods-SealdSDK demo app ios swiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SealdSDK demo app ios swiftTests.debug.xcconfig"; path = "Target Support Files/Pods-SealdSDK demo app ios swiftTests/Pods-SealdSDK demo app ios swiftTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				914B6DF229AE0A6D00B9FDE9 /* Assets.xcassets */,
 				914B6DF429AE0A6D00B9FDE9 /* Preview Content */,
 				277BE14D29BF880A00F1F346 /* jwt_builder.swift */,
+				279523142A015859002236FF /* ssks_backend.swift */,
 			);
 			path = "seald-sdk-demo-app-ios-swift";
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				279523152A015859002236FF /* ssks_backend.swift in Sources */,
 				914B6DF129AE0A6900B9FDE9 /* ContentView.swift in Sources */,
 				277BE14E29BF880A00F1F346 /* jwt_builder.swift in Sources */,
 				914B6DEF29AE0A6900B9FDE9 /* seald_sdk_demo_app_ios_swiftApp.swift in Sources */,
