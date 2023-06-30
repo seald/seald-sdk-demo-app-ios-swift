@@ -392,7 +392,7 @@ func ssksTMRTests(testCredentials: TestCredentials) async -> Bool{
         
         // Let's simulate the renew with another random identity
         let identitySecondKey =  randomData(length: 10) // should be the result of: sdk.exportIdentity()
-        try await ssksTMR.saveIdentityAsync(authSessionRetrieve.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey, identity: identitySecondKey) // to save the newly renewed identity on the server, you can re-use the session used to retrieve, with the same challenge
+        try await ssksTMR.saveIdentityAsync(retrieveResp.authenticatedSessionId, authFactor: authFactor, challenge: "", rawTMRSymKey: rawTMRSymKey, identity: identitySecondKey) // to save the newly renewed identity on the server, you can use the `authenticatedSessionId` from the response to `retrieveIdentityAsync`, with no challenge
         
         // And now let's retrieve this new saved identity
         let authSessionRetrieve2 = try await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: false)
