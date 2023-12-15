@@ -83,17 +83,42 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         try await sdk3.setGroupAdminsAsyncWithGroupId(groupId, addToAdmins: [], removeFromAdmins: [user1AccountInfo.userId]) // user3 can remove user1 from admins
         
         // Create encryption session: https://docs.seald.io/sdk/guides/6-encryption-sessions.html
-        let recipients = [user1AccountInfo.userId, user2AccountInfo.userId, groupId]
+        let allRights = SealdRecipientRights(read: true, forward: true, revoke: true)
+        let recipients = [SealdRecipientWithRights(recipientId: user1AccountInfo.userId, rights: allRights), SealdRecipientWithRights(recipientId: user2AccountInfo.userId, rights: allRights), SealdRecipientWithRights(recipientId: groupId, rights: allRights)]
         let es1SDK1 = try await sdk1.createEncryptionSessionAsync(withRecipients: recipients, useCache: true) // user1, user2, and group as recipients
+        assert(es1SDK1.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.created)
         
+        // Create proxy sessions
+        let proxySession1 = try await sdk1.createEncryptionSessionAsync(
+            withRecipients: [
+            SealdRecipientWithRights(recipientId: user1AccountInfo.userId, rights: allRights), // user1 needs to be a recipient of this session in order to be able to add it as a proxy session
+            SealdRecipientWithRights(recipientId: user3AccountInfo.userId, rights: allRights)
+        ],
+            useCache: true
+        )
+        try await es1SDK1.addProxySessionAsync(proxySession1.sessionId, rights: allRights)
+
+        let proxySession2 = try await sdk1.createEncryptionSessionAsync(
+            withRecipients: [
+            SealdRecipientWithRights(recipientId: user1AccountInfo.userId, rights: allRights), // user1 needs to be a recipient of this session in order to be able to add it as a proxy session
+            SealdRecipientWithRights(recipientId: user2AccountInfo.userId, rights: allRights)
+        ],
+            useCache: true
+        )
+        try await es1SDK1.addProxySessionAsync(proxySession2.sessionId, rights: allRights)
+
         // The SealdEncryptionSession object can encrypt and decrypt for user1
         let initialString = "a message that needs to be encrypted!"
         let encryptedMessage = try await es1SDK1.encryptMessageAsync(initialString)
         let decryptedMessage = try await es1SDK1.decryptMessageAsync(encryptedMessage)
         assert(initialString == decryptedMessage)
         
-        // user1 can retrieve the EncryptionSession from the encrypted message
-        let es1SDK1RetrieveFromMess = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true)
+        // user1 can parse/retrieve the EncryptionSession from the encrypted message
+        let es1SDK1FromMessId = try SealdUtils.parseSessionId(fromMessage: encryptedMessage)
+        assert(es1SDK1FromMessId == es1SDK1.sessionId)
+        let es1SDK1RetrieveFromMess = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true, lookupProxyKey: false, lookupGroupKey: false)
+        assert(es1SDK1RetrieveFromMess.sessionId == es1SDK1.sessionId)
+        assert(es1SDK1RetrieveFromMess.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
         let decryptedMessageFromMess = try await es1SDK1RetrieveFromMess.decryptMessageAsync(encryptedMessage)
         assert(initialString == decryptedMessageFromMess)
         
@@ -106,9 +131,13 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         // Encrypt the test file. Resulting file will be written alongside the source file, with `.seald` extension added
         let encryptedFileURI = try await es1SDK1.encryptFileAsync(fromURI: filePath)
         
-        // User1 can retrieve the encryptionSession directly from the encrypted file
-        let es1SDK1FromFile = try await sdk1.retrieveEncryptionSessionAsync(fromFile: encryptedFileURI, useCache: true)
-        
+        // User1 can parse/retrieve the encryptionSession directly from the encrypted file
+        let es1SDK1FromFileId = try SealdUtils.parseSessionId(fromFile: encryptedFileURI)
+        assert(es1SDK1FromFileId == es1SDK1.sessionId)
+        let es1SDK1FromFile = try await sdk1.retrieveEncryptionSessionAsync(fromFile: encryptedFileURI, useCache: true, lookupProxyKey: false, lookupGroupKey: false)
+        assert(es1SDK1FromFile.sessionId == es1SDK1.sessionId)
+        assert(es1SDK1FromFile.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
+
         // The retrieved session can decrypt the file.
         // The decrypted file will be named with the name it had at encryption. Any renaming of the encrypted file will be ignored.
         // NOTE: In this example, the decrypted file will have `(1)` suffix to avoid overwriting the original clear file.
@@ -117,12 +146,32 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         let decryptedFileContent = try String(contentsOfFile: decryptedFileURI, encoding: .utf8)
         assert(fileContent == decryptedFileContent)
         
-        // user2 and user3 can retrieve the encryptionSession (from the encrypted message or the session ID).
-        let es1SDK2 = try await sdk2.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: true)
+        // User1 can parse/retrieve the encryptionSession directly from the encrypted file bytes
+        let fileBytes = try Data(contentsOf: URL(fileURLWithPath: encryptedFileURI))
+        let es1SDK1FromBytesId = try SealdUtils.parseSessionId(fromBytes: fileBytes)
+        assert(es1SDK1FromBytesId == es1SDK1.sessionId)
+        let es1SDK1FromBytes = try await sdk1.retrieveEncryptionSessionAsync(fromBytes: fileBytes, useCache: true, lookupProxyKey: false, lookupGroupKey: false)
+        assert(es1SDK1FromBytes.sessionId == es1SDK1.sessionId)
+        assert(es1SDK1FromBytes.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
+
+        // user2 can retrieve the encryptionSession from the session ID.
+        let es1SDK2 = try await sdk2.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: true, lookupProxyKey: false, lookupGroupKey: false)
+        assert(es1SDK2.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
         let decryptedMessageSDK2 = try await es1SDK2.decryptMessageAsync(encryptedMessage)
         assert(initialString == decryptedMessageSDK2)
         
-        let es1SDK3FromGroup = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true)
+        // user3 cannot retrieve the SealdEncryptionSession with lookupGroupKey set to false.
+        do {
+            let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
+            assert(false, "expected error")
+        } catch {
+            assert((error as NSError).userInfo["status"] as! Int == 404)
+        }
+
+        // user3 can retrieve the encryptionSession from the encrypted message through the group.
+        let es1SDK3FromGroup = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true, lookupProxyKey: false, lookupGroupKey: true)
+        assert(es1SDK3FromGroup.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.viaGroup)
+        assert(es1SDK3FromGroup.retrievalDetails.groupId == groupId)
         let decryptedMessageSDK3 = try await es1SDK3FromGroup.decryptMessageAsync(encryptedMessage)
         assert(initialString == decryptedMessageSDK3)
         
@@ -133,70 +182,80 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         // As the group was deleted, it can no longer access it.
         // user3 still has the encryption session in its cache, but we can disable it.
         do {
-            let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
+            let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false, lookupProxyKey: false, lookupGroupKey: true)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("status: 404"))
+            assert((error as NSError).userInfo["status"] as! Int == 404)
         }
         
+        // user3 can still retrieve the session via proxy.
+        let es1SDK3FromProxy = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: true, lookupProxyKey: true, lookupGroupKey: false)
+        assert(es1SDK3FromProxy.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.viaProxy)
+        assert(es1SDK3FromProxy.retrievalDetails.proxySessionId == proxySession1.sessionId)
+        
         // user2 adds user3 as recipient of the encryption session.
-        let respAdd = try await es1SDK2.addRecipientsAsync([user3AccountInfo.userId])
+        let respAdd = try await es1SDK2.addRecipientsAsync([SealdRecipientWithRights(recipientId: user3AccountInfo.userId, rights: allRights)])
         assert(respAdd.count == 1)
         assert((respAdd[user3AccountInfo.deviceId]!).success)
         
-        // user3 can now retrieve it.
-        let es1SDK3 = try await sdk3.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: false)
+        // user3 can now retrieve it without group or proxy.
+        let es1SDK3 = try await sdk3.retrieveEncryptionSessionAsync(withSessionId: es1SDK1.sessionId, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
+        assert(es1SDK3.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
         let decryptedMessageAfterAdd = try await es1SDK3.decryptMessageAsync(encryptedMessage)
         assert(initialString == decryptedMessageAfterAdd)
         
-        // user1 revokes user3 from the encryption session.
-        // TODO: used to be user2 instead of user1 which does the revoke, but not possible until https://gitlab.tardis.seald.io/seald/go-seald-sdk/-/issues/83
-        let respRevoke = try await es1SDK1.revokeRecipientsAsync([user3AccountInfo.userId])
-        assert(respRevoke.count == 1)
-        assert((respRevoke[user3AccountInfo.userId]!).success)
-        
-        // user3 cannot retrieve the session anymore
+        // user1 revokes user3 and proxy1 from the encryption session.
+        let respRevoke = try await es1SDK1.revokeRecipientsIdsAsync([user3AccountInfo.userId], proxySessionsIds: [proxySession1.sessionId])
+        assert(respRevoke.recipients.count == 1)
+        assert((respRevoke.recipients[user3AccountInfo.userId]!).success)
+        assert(respRevoke.proxySessions.count == 1)
+        assert((respRevoke.proxySessions[proxySession1.sessionId]!).success)
+
+        // user3 cannot retrieve the session anymore, even with proxy or group
         do {
-            let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
+            let _ = try await sdk3.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false, lookupProxyKey: true, lookupGroupKey: true)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("status: 404"))
+            assert((error as NSError).userInfo["status"] as! Int == 404)
         }
         
         // user1 revokes all other recipients from the session
         let respRevokeOther = try await es1SDK1.revokeOthersAsync()
-        assert(respRevokeOther.count == 2) // revoke user2 and group
-        assert((respRevokeOther[groupId]!).success)
-        assert((respRevokeOther[user2AccountInfo.userId]!).success)
-        
+        assert(respRevokeOther.recipients.count == 2) // revoke user2 and group
+        assert((respRevokeOther.recipients[groupId]!).success)
+        assert((respRevokeOther.recipients[user2AccountInfo.userId]!).success)
+        assert(respRevokeOther.proxySessions.count == 1)
+        assert((respRevokeOther.proxySessions[proxySession2.sessionId]!).success)
+
         // user2 cannot retrieve the session anymore
         do {
-            let _ = try await sdk2.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
+            let _ = try await sdk2.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("status: 404"))
+            assert((error as NSError).userInfo["status"] as! Int == 404)
         }
         
         // user1 revokes all. It can no longer retrieve it.
         let respRevokeAll = try await es1SDK1.revokeAllAsync()
-        assert(respRevokeAll.count == 1)
-        assert(respRevokeAll[user1AccountInfo.userId]!.success)
-        
+        assert(respRevokeAll.recipients.count == 1)
+        assert(respRevokeAll.recipients[user1AccountInfo.userId]!.success)
+        assert(respRevokeAll.proxySessions.count == 0)
+
         do {
-            let _ = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false)
+            let _ = try await sdk1.retrieveEncryptionSessionAsync(fromMessage: encryptedMessage, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("status: 404"))
+            assert((error as NSError).userInfo["status"] as! Int == 404)
         }
         
         // Create additional data for user1
-        let es2SDK1 = try await sdk1.createEncryptionSessionAsync(withRecipients: [user1AccountInfo.userId], useCache: true)
+        let es2SDK1 = try await sdk1.createEncryptionSessionAsync(withRecipients: [SealdRecipientWithRights(recipientId: user1AccountInfo.userId, rights: allRights)], useCache: true)
         let anotherMessage = "nobody should read that!"
         let secondEncryptedMessage = try await es2SDK1.encryptMessageAsync(anotherMessage)
         
         // user1 can renew its key, and still decrypt old messages
         try sdk1.renewKeysWithExpire(after: TimeInterval( 5 * 365 * 24 * 60 * 60))
-        let es2SDK1AfterRenew = try await sdk1.retrieveEncryptionSessionAsync(withSessionId: es2SDK1.sessionId, useCache: false)
+        let es2SDK1AfterRenew = try await sdk1.retrieveEncryptionSessionAsync(withSessionId: es2SDK1.sessionId, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
         let decryptedMessageAfterRenew = try await es2SDK1AfterRenew.decryptMessageAsync(secondEncryptedMessage)
         assert(anotherMessage == decryptedMessageAfterRenew)
         
@@ -238,7 +297,7 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         // user1 can remove a connector
         try await sdk1.removeConnectorAsync(withConnectorId: connectors[0].connectorId)
         
-        // verify that only one connector left
+        // verify that no connector left
         let connectorListAfterRevoke = try await sdk1.listConnectorsAsync()
         assert(connectorListAfterRevoke.count == 0)
         
@@ -250,7 +309,7 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         try await sdk1Exported.importIdentityAsync(withIdentity: exportIdentity)
         
         // SDK with imported identity can decrypt
-        let es2SDK1Exported = try await sdk1Exported.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: true)
+        let es2SDK1Exported = try await sdk1Exported.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: true, lookupProxyKey: false, lookupGroupKey: false)
         let clearMessageExportedIdentity = try await es2SDK1Exported.decryptMessageAsync(secondEncryptedMessage)
         assert(anotherMessage == clearMessageExportedIdentity)
         
@@ -265,7 +324,7 @@ func sdkTests(testCredentials: TestCredentials, sealdDir: String) async -> Bool 
         try await sdk1SubDevice.importIdentityAsync(withIdentity: subIdentity.backupKey)
         
         // sub device can decrypt
-        let es2SDK1SubDevice = try await sdk1SubDevice.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: false)
+        let es2SDK1SubDevice = try await sdk1SubDevice.retrieveEncryptionSessionAsync(fromMessage: secondEncryptedMessage, useCache: false, lookupProxyKey: false, lookupGroupKey: false)
         let clearMessageSubdIdentity = try await es2SDK1SubDevice.decryptMessageAsync(secondEncryptedMessage)
         assert(anotherMessage == clearMessageSubdIdentity)
         
@@ -293,7 +352,7 @@ func ssksPasswordTests(testCredentials: TestCredentials) async -> Bool {
         // Simulating a Seald identity with random data, for a simpler example.
         let userIdentity = randomData(length: 10) // should be the result of: sdk.exportIdentity()
         
-        let ssksPassword = SealdSsksPasswordPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+        let ssksPassword = SealdSsksPasswordPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId, instanceName: "SdkDemoAppIosSwift", logLevel: -1, logNoColor: true)
 
         // Test with password
         let userPassword = randomString(length: 10)
@@ -314,7 +373,7 @@ func ssksPasswordTests(testCredentials: TestCredentials) async -> Bool {
             try await ssksPassword.retrieveIdentityAsync(withUserId: userId, password: userPassword)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("ssks password cannot find identity with this id/password combination"))
+            assert((error as NSError).userInfo["code"] as! String == "SSKSPASSWORD_CANNOT_FIND_IDENTITY")
         }
 
         // Retrieving with the new password works
@@ -341,7 +400,7 @@ func ssksPasswordTests(testCredentials: TestCredentials) async -> Bool {
             try await ssksPassword.retrieveIdentityAsync(withUserId: userId, rawStorageKey: rawStorageKey, rawEncryptionKey: rawEncryptionKey)
             assert(false, "expected error")
         } catch {
-            assert(error.localizedDescription.contains("ssks password cannot find identity with this id/password combination"))
+            assert((error as NSError).userInfo["code"] as! String == "SSKSPASSWORD_CANNOT_FIND_IDENTITY")
         }
 
         print("SSKS Password tests success!")
@@ -365,7 +424,7 @@ func ssksTMRTests(testCredentials: TestCredentials) async -> Bool{
         // Simulating a Seald identity with random data, for a simpler example.
         let userIdentity = randomData(length: 10) // should be the result of: sdk.exportIdentity()
         
-        let ssksTMR = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+        let ssksTMR = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId, instanceName: "SdkDemoAppIosSwift", logLevel: -1, logNoColor: true)
         
         let authFactor = SealdSsksAuthFactor(value: userEM, type: "EM")
         
@@ -402,7 +461,7 @@ func ssksTMRTests(testCredentials: TestCredentials) async -> Bool{
         assert(retrievedSecondKey.identity == identitySecondKey)
         
         // Try retrieving with another SealdSsksTMRPlugin instance
-        let ssksTMRInst2 = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId)
+        let ssksTMRInst2 = SealdSsksTMRPlugin(ssksURL: testCredentials.ssksUrl, appId: testCredentials.ssksBackendAppId, instanceName: "SdkDemoAppIosSwift", logLevel: -1, logNoColor: true)
         let authSessionRetrieve3 = try await ssksBackend.challengeSend(userId: userId, authFactor: authFactor, createUser: true, forceAuth: true)
         assert(authSessionRetrieve3.must_authenticate == true)
         let inst2Retrieve = try await ssksTMRInst2.retrieveIdentityAsync(authSessionRetrieve3.session_id, authFactor: authFactor, challenge: testCredentials.ssksTMRChallenge, rawTMRSymKey: rawTMRSymKey)

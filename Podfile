@@ -5,7 +5,7 @@ target 'SealdSDK demo app ios swift' do
   use_frameworks!
 
   # Pods for go-sdk-demo-app-ios-swift
-  pod 'SealdSdk', '0.1.0-beta.53083'
+  pod 'SealdSdk', '0.4.0-beta.0'
   pod 'JWT', '3.0.0-beta.14'
   pod 'Base64'
 
