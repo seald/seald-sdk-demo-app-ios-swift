@@ -261,6 +261,91 @@ func testSealdSDK() async -> Bool {
         )
         assert(classicES.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
 
+        // Using SymEncKeys
+
+        // Create a session, add SymEncKeys, then retrieve the session using them.
+        // Create session
+        let esSymEncKeys = try await sdk1.createEncryptionSessionAsync(
+            withRecipients: [SealdRecipientWithRights(recipientId: user1AccountInfo.userId)],
+            metadata: "test-swift-sessionSymEncKeys",
+            useCache: false
+        )
+
+        // Create a SymEncKey with Password
+        let symEncKeyPassword = randomString(length: 16)
+        let symEncKeyFromPassword = try await esSymEncKeys.addSymEncKeyAsync(
+            fromPassword: symEncKeyPassword,
+            rights: nil
+        )
+        assert(symEncKeyFromPassword.count == 36)
+
+        // Create a SymEncKey with raw keys
+        let symEncKeySecret = randomString(length: 16)
+        // WARNING: This MUST be a cryptographically random buffer of 64 bytes.
+        let symEncKeyRawKey = randomData(length: 64)
+        let symEncKeyFromRawKeys = try await esSymEncKeys.addSymEncKeyAsync(
+            fromRawKeys: symEncKeySecret,
+            rawSymKey: symEncKeyRawKey,
+            rights: nil
+        )
+        assert(symEncKeyFromRawKeys.count == 36)
+
+        // Retrieve the encryption session using the SymEncKey with Password
+        let sekpES = try await sdk2.retrieveEncryptionSessionAsync(
+            withSymEncKeyPassword: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromPassword,
+            symEncKeyPassword: symEncKeyPassword,
+            useCache: false
+        )
+        assert(sekpES.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.viaSymEncKey)
+
+        // Retrieve the encryption session using the SymEncKey with raw keys
+        let sekrES = try await sdk3.retrieveEncryptionSessionAsync(
+            withSymEncKeyRawKeys: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromRawKeys,
+            rawSecret: symEncKeySecret,
+            rawSymKey: symEncKeyRawKey,
+            useCache: false
+        )
+        assert(sekrES.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.viaSymEncKey)
+
+        // Self-add using the SymEncKey with Password
+        _ = try await sdk2.selfAddToEncryptionSessionAsync(
+            withSymEncKeyPassword: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromPassword,
+            symEncKeyPassword: symEncKeyPassword,
+            rights: nil,
+            useCache: false
+        )
+
+        // After conversion, sdk2 can retrieve the encryption session directly.
+        let classicESfromSymEncKeyPassword = try await sdk2.retrieveEncryptionSessionAsync(
+            withSessionId: esSymEncKeys.sessionId,
+            useCache: false,
+            lookupProxyKey: false,
+            lookupGroupKey: false
+        )
+        assert(classicESfromSymEncKeyPassword.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
+
+        // Self-add using the SymEncKey with Raw Keys
+        _ = try await sdk3.selfAddToEncryptionSessionAsync(
+            withSymEncKeyRawKeys: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromRawKeys,
+            rawSecret: symEncKeySecret,
+            rawSymKey: symEncKeyRawKey,
+            rights: nil,
+            useCache: false
+        )
+
+        // After conversion, sdk3 can retrieve the encryption session directly.
+        let classicESfromSymEncKeyRawKeys = try await sdk3.retrieveEncryptionSessionAsync(
+            withSessionId: esSymEncKeys.sessionId,
+            useCache: false,
+            lookupProxyKey: false,
+            lookupGroupKey: false
+        )
+        assert(classicESfromSymEncKeyRawKeys.retrievalDetails.flow == SealdEncryptionSessionRetrievalFlow.direct)
+
         // Using proxy sessions: https://docs.seald.io/sdk/guides/proxy-sessions.html
 
         // Create proxy sessions:
@@ -1163,6 +1248,59 @@ func testSealdAnonymousSDK() async -> Bool {
         ) // Retrieve the encryption session using the JWT
         let decryptedTMR = try await tmrES.decryptMessageAsync(encryptedMessage)
         assert(decryptedTMR == initialMessage) // TMR-retrieved session can decrypt the message
+
+        // Using SymEncKeys
+
+        // Add SymEncKeys, then retrieve the session using them.
+        // Create session
+        let esSymEncKeys = try await sdkClassicUser.createEncryptionSessionAsync(
+            withRecipients: [SealdRecipientWithRights(recipientId: sdkClassicUserInfo.userId)],
+            metadata: "anonymous-swift-sessionSymEncKeys",
+            useCache: false
+        )
+        let encryptedMessageSymEncKey = try await esSymEncKeys.encryptMessageAsync(initialMessage)
+
+        // Create a SymEncKey with Password
+        let symEncKeyPassword = randomString(length: 16)
+        let symEncKeyFromPassword = try await esSymEncKeys.addSymEncKeyAsync(
+            fromPassword: symEncKeyPassword,
+            rights: nil
+        )
+        assert(symEncKeyFromPassword.count == 36)
+
+        // Create a SymEncKey with raw keys
+        let symEncKeySecret = randomString(length: 16)
+        // WARNING: This MUST be a cryptographically random buffer of 64 bytes.
+        let symEncKeyRawKey = randomData(length: 64)
+        let symEncKeyFromRawKeys = try await esSymEncKeys.addSymEncKeyAsync(
+            fromRawKeys: symEncKeySecret,
+            rawSymKey: symEncKeyRawKey,
+            rights: nil
+        )
+        assert(symEncKeyFromRawKeys.count == 36)
+
+        // Retrieve the encryption session using the SymEncKey with Password
+        let retrieveJwtPassword = try await jwtBuilder.anonymousRetrieveSessionJWT(symEncKeyId: symEncKeyFromPassword)
+        let sekpES = try anonymousSDK.retrieveAnonymousEncryptionSession(
+            withSymEncKeyPassword: retrieveJwtPassword,
+            sessionId: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromPassword,
+            symEncKeyPassword: symEncKeyPassword
+        )
+        let decryptedFromPassword = try await sekpES.decryptMessageAsync(encryptedMessageSymEncKey)
+        assert(decryptedFromPassword == initialMessage)
+
+        // Retrieve the encryption session using the SymEncKey with raw keys
+        let retrieveJwtRawKeys = try await jwtBuilder.anonymousRetrieveSessionJWT(symEncKeyId: symEncKeyFromRawKeys)
+        let sekrES = try anonymousSDK.retrieveAnonymousEncryptionSession(
+            withSymEncKeyRawKeys: retrieveJwtRawKeys,
+            sessionId: esSymEncKeys.sessionId,
+            symEncKeyId: symEncKeyFromRawKeys,
+            rawSecret: symEncKeySecret,
+            rawSymKey: symEncKeyRawKey
+        )
+        let decryptedFromRawKeys = try await sekrES.decryptMessageAsync(encryptedMessageSymEncKey)
+        assert(decryptedFromRawKeys == initialMessage)
 
         // Serialize / Deserialize session
         let serialized = try anonymousSession.serialize() // serialize

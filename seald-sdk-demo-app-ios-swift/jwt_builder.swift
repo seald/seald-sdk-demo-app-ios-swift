@@ -28,13 +28,14 @@ class JWTBuilder {
         )
     }
 
-    enum JWTPermission: String {
-        case all = "-1"
-        case anonymousCreateMessage = "0"
-        case anonymousFindKey = "1"
-        case anonymousFindSigchain = "2"
-        case joinTeam = "3"
-        case addConnector = "4"
+    enum JWTPermission: Int {
+        case all = -1
+        case anonymousCreateMessage = 0
+        case anonymousFindKey = 1
+        case anonymousFindSigchain = 2
+        case joinTeam = 3
+        case addConnector = 4
+        case anonymousRetrieveSession = 5
     }
 
     struct SignupPayload: JWTPayload {
@@ -42,7 +43,7 @@ class JWTBuilder {
         let jti: String
         let iat: Date
         let join_team: Bool // swiftlint:disable:this identifier_name
-        let scopes: String
+        let scopes: [Int]
 
         func verify(using key: some JWTAlgorithm) throws {}
     }
@@ -52,7 +53,7 @@ class JWTBuilder {
         let jti: String
         let iat: Date
         let connector_add: [String: String] // swiftlint:disable:this identifier_name
-        let scopes: String
+        let scopes: [Int]
 
         func verify(using key: some JWTAlgorithm) throws {}
     }
@@ -60,7 +61,7 @@ class JWTBuilder {
     struct AnonymousFindKeyPayload: JWTPayload {
         let iss: String
         let iat: Date
-        let scopes: String
+        let scopes: [Int]
         let recipients: [String]
 
         func verify(using key: some JWTAlgorithm) throws {}
@@ -70,10 +71,20 @@ class JWTBuilder {
         let iss: String
         let jti: String
         let iat: Date
-        let scopes: String
+        let scopes: [Int]
         let owner: String
         let recipients: [String]
         let tmr_recipients: [[String: String]] // swiftlint:disable:this identifier_name
+
+        func verify(using key: some JWTAlgorithm) throws {}
+    }
+
+    struct AnonymousRetrieveSessionPayload: JWTPayload {
+        let iss: String
+        let jti: String
+        let iat: Date
+        let scopes: [Int]
+        let sym_enc_keys: [String] // swiftlint:disable:this identifier_name
 
         func verify(using key: some JWTAlgorithm) throws {}
     }
@@ -84,7 +95,7 @@ class JWTBuilder {
             jti: UUID().uuidString,
             iat: Date(),
             join_team: true,
-            scopes: JWTPermission.joinTeam.rawValue
+            scopes: [JWTPermission.joinTeam.rawValue]
         )
 
         return try await keys.sign(payload)
@@ -96,7 +107,7 @@ class JWTBuilder {
             jti: UUID().uuidString,
             iat: Date(),
             connector_add: ["type": "AP", "value": "\(customUserId)@\(appId)"],
-            scopes: JWTPermission.addConnector.rawValue
+            scopes: [JWTPermission.addConnector.rawValue]
         )
 
         return try await keys.sign(payload)
@@ -106,7 +117,7 @@ class JWTBuilder {
         let payload = AnonymousFindKeyPayload(
             iss: JWTSharedSecretId,
             iat: Date(),
-            scopes: JWTPermission.anonymousFindKey.rawValue,
+            scopes: [JWTPermission.anonymousFindKey.rawValue],
             recipients: recipients,
         )
 
@@ -122,7 +133,7 @@ class JWTBuilder {
             iss: JWTSharedSecretId,
             jti: UUID().uuidString,
             iat: Date(),
-            scopes: JWTPermission.anonymousCreateMessage.rawValue,
+            scopes: [JWTPermission.anonymousCreateMessage.rawValue],
             owner: owner,
             recipients: recipients,
             tmr_recipients: tmrRecipients.map { factor in
@@ -131,6 +142,18 @@ class JWTBuilder {
                     "auth_factor_value": factor.authFactor.value
                 ]
             },
+        )
+
+        return try await keys.sign(payload)
+    }
+
+    func anonymousRetrieveSessionJWT(symEncKeyId: String) async throws -> String {
+        let payload = AnonymousRetrieveSessionPayload(
+            iss: JWTSharedSecretId,
+            jti: UUID().uuidString,
+            iat: Date(),
+            scopes: [JWTPermission.anonymousRetrieveSession.rawValue],
+            sym_enc_keys: [symEncKeyId]
         )
 
         return try await keys.sign(payload)
